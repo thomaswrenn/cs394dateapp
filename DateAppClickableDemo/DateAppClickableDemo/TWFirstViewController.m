@@ -26,4 +26,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    return nil;
+}
+
 @end

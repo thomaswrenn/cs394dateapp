@@ -82,7 +82,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="first" id="qkY-zc-KM9"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="feed" id="qkY-zc-KM9"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
             </objects>
@@ -101,7 +101,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Create" image="second" id="Pgn-Fh-DPA"/>
+                    <tabBarItem key="tabBarItem" title="Create" image="create" id="Pgn-Fh-DPA"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ISy-9N-muo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -120,7 +120,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="second" id="TxB-Bo-LtE"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="TxB-Bo-LtE"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lT1-dc-PVs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -139,7 +139,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Explore" image="second" id="Z7h-1E-pvt"/>
+                    <tabBarItem key="tabBarItem" title="Explore" image="explore" id="Z7h-1E-pvt"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qq-4t-Ow8" sceneMemberID="firstResponder"/>
             </objects>
@@ -168,8 +168,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
-        <image name="second" width="30" height="30"/>
+        <image name="create" width="24" height="21"/>
+        <image name="explore" width="24" height="24"/>
+        <image name="feed" width="22" height="22"/>
+        <image name="profile" width="24" height="17"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

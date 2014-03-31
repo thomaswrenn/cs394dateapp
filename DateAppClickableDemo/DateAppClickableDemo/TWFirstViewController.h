@@ -10,4 +10,6 @@
 
 @interface TWFirstViewController : UIViewController
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath;
+
 @end
