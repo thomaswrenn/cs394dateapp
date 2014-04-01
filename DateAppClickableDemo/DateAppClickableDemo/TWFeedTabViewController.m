@@ -69,8 +69,9 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
     // Dispose of any resources that can be recreated.
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
+{
+    return self.feedDates.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -90,8 +91,7 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
     cell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
     cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments];
     cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
-    
-    
+    cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
     
     return cell;
 }
