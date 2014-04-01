@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TWSecondViewController : UIViewController
+@interface TWExploreTabViewController : UIViewController
 
 @end

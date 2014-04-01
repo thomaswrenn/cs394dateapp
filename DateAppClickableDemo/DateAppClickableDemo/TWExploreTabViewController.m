@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Thomas Wrenn. All rights reserved.
 //
 
-#import "TWSecondViewController.h"
+#import "TWExploreTabViewController.h"
 
-@interface TWSecondViewController ()
+@interface TWExploreTabViewController ()
 
 @end
 
-@implementation TWSecondViewController
+@implementation TWExploreTabViewController
 
 - (void)viewDidLoad
 {

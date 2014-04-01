@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TWFirstViewController : UIViewController
+@interface TWFeedTabViewController : UIViewController
+
+@property (strong, nonatomic) NSMutableArray *feedDates;
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath;
 
