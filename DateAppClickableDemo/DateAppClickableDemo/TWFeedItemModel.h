@@ -10,7 +10,7 @@
 
 @interface TWFeedItemModel : NSObject
 
-@property (strong, nonatomic) NSMutableArray *imagesURL; // TODO: For Now
+@property (strong, nonatomic) NSMutableArray *imageURLs; // TODO: For Now
 @property (strong, nonatomic) NSMutableString *username;
 @property (strong, nonatomic) NSMutableString *userProfileImageURL;
 @property (strong, nonatomic) NSDate *timePosted;

@@ -9,11 +9,13 @@
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) //1
 #define kfeedItemsJSONURL [NSURL URLWithString: @"https://dl.dropboxusercontent.com/u/641088/DateApp/feedRESTcall.json"] //2
 
+#import <YLMoment.h>
+#import "TWUtility.h"
 #import "TWFeedItemModel.h"
 #import "TWFeedCell.h"
 #import "TWFeedTabViewController.h"
 
-NSString *kCellID = @"cellID";                          // UICollectionViewCell storyboard id
+NSString *kFeedCellID = @"feedCellID";                          // UICollectionViewCell storyboard id
 
 @interface TWFeedTabViewController ()
 
@@ -45,11 +47,19 @@ NSString *kCellID = @"cellID";                          // UICollectionViewCell 
     NSArray *jsonFeedItems = [json objectForKey:@"dates"];
     
     for (NSInteger i = 0; i < jsonFeedItems.count; i++) {
-        TWFeedItemModel *tempItemModel = [[TWFeedItemModel alloc] init];
+        NSDictionary *json = jsonFeedItems[i];
+        TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
         
         // TODO Assign each thing to the proper thing
-        
-        [self.feedDates addObject: tempItemModel];
+        itemModel.username = [json objectForKey:@"username"];
+        itemModel.userProfileImageURL = [json objectForKey:@"userProfileImageURL"];
+        itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[json objectForKey:@"timePosted"] doubleValue]];
+        itemModel.imageURLs = [json objectForKey:@"images"];
+        itemModel.comments = [json objectForKey:@"comments"];
+        itemModel.locations = [json objectForKey:@"locations"];
+        itemModel.likes = [json objectForKey:@"likes"];
+
+        [self.feedDates addObject: itemModel];
     }
 }
 
@@ -63,18 +73,25 @@ NSString *kCellID = @"cellID";                          // UICollectionViewCell 
     return nil;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // we're going to use a custom UICollectionViewCell, which will hold an image and its label
-    //
-    TWFeedCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
-    
-    // make the cell's title the actual NSIndexPath value
-    cell.label.text = [NSString stringWithFormat:@"{%ld,%ld}", (long)indexPath.row, (long)indexPath.section];
+    TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: indexPath.row];
+    TWFeedCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kFeedCellID forIndexPath:indexPath];
     
     // load the image for this cell
-    NSString *imageToLoad = [NSString stringWithFormat:@"%d.JPG", indexPath.row];
-    cell.image.image = [UIImage imageNamed:imageToLoad];
+    NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.imageURLs[0]]];
+    cell.topImage.image = [UIImage imageWithData:imageData];
+    
+    imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
+    cell.userProfileImage.image = [UIImage imageWithData:imageData];
+    
+    cell.username.text = itemModel.username;
+    
+    cell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
+    cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments];
+    cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
+    
+    
     
     return cell;
 }

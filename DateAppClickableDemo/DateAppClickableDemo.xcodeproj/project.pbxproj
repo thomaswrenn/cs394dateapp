@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		752F477418EB5FF200EC038B /* TWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 752F477318EB5FF200EC038B /* TWUtility.m */; };
 		753668F318EA2538005ACE73 /* TWCreateTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 753668F218EA2538005ACE73 /* TWCreateTabViewController.m */; };
 		753668F618EA254C005ACE73 /* TWProfileTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 753668F518EA254C005ACE73 /* TWProfileTabViewController.m */; };
 		753668F918EA27EF005ACE73 /* TWFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 753668F818EA27EF005ACE73 /* TWFeedCell.m */; };
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		752F477218EB5FF200EC038B /* TWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWUtility.h; sourceTree = "<group>"; };
+		752F477318EB5FF200EC038B /* TWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWUtility.m; sourceTree = "<group>"; };
 		753668F118EA2538005ACE73 /* TWCreateTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCreateTabViewController.h; sourceTree = "<group>"; };
 		753668F218EA2538005ACE73 /* TWCreateTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWCreateTabViewController.m; sourceTree = "<group>"; };
 		753668F418EA254C005ACE73 /* TWProfileTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWProfileTabViewController.h; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 		7543997518E24EF500C667BD /* DateAppClickableDemo */ = {
 			isa = PBXGroup;
 			children = (
+				752F477218EB5FF200EC038B /* TWUtility.h */,
+				752F477318EB5FF200EC038B /* TWUtility.m */,
 				7543997E18E24EF500C667BD /* TWAppDelegate.h */,
 				7543997F18E24EF500C667BD /* TWAppDelegate.m */,
 				7543998118E24EF500C667BD /* Main.storyboard */,
@@ -322,6 +327,7 @@
 			files = (
 				753668F918EA27EF005ACE73 /* TWFeedCell.m in Sources */,
 				753668F318EA2538005ACE73 /* TWCreateTabViewController.m in Sources */,
+				752F477418EB5FF200EC038B /* TWUtility.m in Sources */,
 				7543998618E24EF500C667BD /* TWFeedTabViewController.m in Sources */,
 				7543998918E24EF500C667BD /* TWExploreTabViewController.m in Sources */,
 				753668F618EA254C005ACE73 /* TWProfileTabViewController.m in Sources */,
