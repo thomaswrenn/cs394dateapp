@@ -60,6 +60,7 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
         itemModel.likes = [json objectForKey:@"likes"];
 
         [self.feedDates addObject: itemModel];
+        [self.feedCollectionView reloadData];
     }
 }
 
@@ -69,9 +70,15 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
     // Dispose of any resources that can be recreated.
 }
 
+# pragma mark - UICollectionViewDelegate/Datasource
+
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     return self.feedDates.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
+    return 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -94,6 +101,19 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
     cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
     
     return cell;
+}
+
+#pragma mark – UICollectionViewDelegateFlowLayout
+
+// 1
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(600, 1200);
+}
+
+// 3
+- (UIEdgeInsets)collectionView:
+(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(50, 20, 50, 20);
 }
 
 @end

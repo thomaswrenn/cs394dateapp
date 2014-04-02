@@ -86,14 +86,22 @@
                                             <outlet property="timePosted" destination="F3q-Yq-Fal" id="mXU-N5-7X1"/>
                                             <outlet property="topImage" destination="UPd-Ux-r4o" id="dg1-Vg-bIk"/>
                                             <outlet property="userProfileImage" destination="fxy-Yh-p8h" id="F1m-5L-NWH"/>
+                                            <outlet property="username" destination="chE-6t-jyU" id="UPq-kL-Z63"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="CZ4-MO-1fc" id="Eqb-22-DwN"/>
+                                    <outlet property="delegate" destination="CZ4-MO-1fc" id="Uof-Mf-7yA"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="feed" id="qkY-zc-KM9"/>
+                    <connections>
+                        <outlet property="feedCollectionView" destination="GT2-3n-TUo" id="Peh-nm-VvL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
             </objects>
