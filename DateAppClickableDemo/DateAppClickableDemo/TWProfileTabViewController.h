@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface TWProfileTabViewController : UIViewController
+@interface TWProfileTabViewController : UIViewController<UITableViewDelegate,MKMapViewDelegate>
+
 
 @end
