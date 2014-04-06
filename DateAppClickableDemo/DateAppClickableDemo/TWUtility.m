@@ -18,6 +18,12 @@
     return commentString;
 }
 
++ (NSString *)locationFromJSONItem:(NSString *)jsonItem {
+    NSString *locationString = @"";
+    locationString = jsonItem;
+    return locationString;
+}
+
 + (NSString *)commentsBlockFromNSArray:(NSMutableArray *)nsarray {
     NSString *commentsBlockString = @"";
     for (NSInteger i = 0; i < nsarray.count; i++) {
@@ -28,7 +34,13 @@
 }
 
 + (NSString *)locationsFromNSArray:(NSMutableArray *)nsarray {
-    NSString* locationsBlockString = @
+    NSString* locationsBlockString = @"";
+    for (NSInteger i = 0; i < nsarray.count; i++) {
+        NSString *location = nsarray[i];
+        [[self class] locationFromJSONItem:location];
+    }
+    return locationsBlockString;
+
 }
 
 @end
