@@ -7,8 +7,11 @@
 //
 
 #import "TWCreateTabViewController.h"
+#import "GPUImage.h"
 
-@interface TWCreateTabViewController ()
+@interface TWCreateTabViewController (){
+    UIImage *originalImage;
+}
 
 @end
 
@@ -23,16 +26,106 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+	// Do any additional setup after loading the view, typically from a nib.
+    
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                              message:@"Device has no camera"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles: nil];
+        
+        [myAlertView show];
+        
+    }
+    
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+}
+
+- (IBAction)takePhoto:(UIButton *)sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+  
+}
+
+
+
+
+- (IBAction)saveImage:(UIButton *)sender {
+    UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSString *alertTitle;
+    NSString *alertMessage;
+    
+    if(!error)
+    {
+        alertTitle   = @"Image Saved";
+        alertMessage = @"Image saved to photo album successfully.";
+    }
+    else
+    {
+        alertTitle   = @"Error";
+        alertMessage = @"Unable to save to photo album.";
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                    message:alertMessage
+                                                   delegate:self
+                                          cancelButtonTitle:@"Okay"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (IBAction)album:(UIButton *)sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+}
+
+#pragma mark - Image Picker Controller delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    //UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    //self.imageView.image = chosenImage;
+    
+    //[picker dismissViewControllerAnimated:YES completion:NULL];
+    
+    originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    [self.imageView setImage:originalImage];
+    
+    [picker dismissModalViewControllerAnimated:YES];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
 }
 
 /*
@@ -46,4 +139,7 @@
 }
 */
 
+
 @end
+
+

@@ -8,5 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TWCreateTabViewController : UIViewController
+
+@interface TWCreateTabViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+
+- (IBAction)album:(UIButton *)sender;
+- (IBAction)takePhoto:(UIButton *)sender;
+- (IBAction)addFilter:(UIButton *)sender;
+- (IBAction)saveImage:(UIButton *)sender;
+
+
 @end
