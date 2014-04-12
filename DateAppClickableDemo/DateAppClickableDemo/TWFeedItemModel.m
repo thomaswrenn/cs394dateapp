@@ -10,4 +10,17 @@
 
 @implementation TWFeedItemModel
 
+- (id)init {
+    self = [super init];
+    
+    if (self) {
+        // initialize instance variables here
+         _userProfileImageURL = [[NSMutableString alloc] init];
+        _username = [[NSMutableString alloc] init];
+        
+    }
+    
+    return self;
+}
+
 @end

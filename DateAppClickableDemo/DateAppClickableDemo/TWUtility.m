@@ -12,9 +12,12 @@
 
 + (NSString *)commentFromCommentNSDict:(NSDictionary *)nsdict {
     NSString *commentString = @"";
-    [commentString stringByAppendingString: [nsdict objectForKey:@"user"]];
-    [commentString stringByAppendingString: [nsdict objectForKey:@"text"]];
-    [commentString stringByAppendingString: [nsdict objectForKey:@"\n"]];
+    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"user"]];
+    commentString = [commentString stringByAppendingString: @": "];
+    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"text"]];
+    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"\n"]];
+    
+    
     return commentString;
 }
 
@@ -25,19 +28,20 @@
 }
 
 + (NSString *)commentsBlockFromNSArray:(NSMutableArray *)nsarray {
-    NSString *commentsBlockString = @"";
+    NSMutableString *commentsBlockString = [[NSMutableString alloc] init];
     for (NSInteger i = 0; i < nsarray.count; i++) {
         NSDictionary *comment = nsarray[i];
-        [[self class] commentFromCommentNSDict:comment];
+        [commentsBlockString appendString: [[self class] commentFromCommentNSDict:comment]];
     }
     return commentsBlockString;
 }
 
 + (NSString *)locationsFromNSArray:(NSMutableArray *)nsarray {
-    NSString* locationsBlockString = @"";
+    NSMutableString* locationsBlockString = [[NSMutableString alloc] init];
     for (NSInteger i = 0; i < nsarray.count; i++) {
         NSString *location = nsarray[i];
-        [[self class] locationFromJSONItem:location];
+        [locationsBlockString appendString: [[self class] locationFromJSONItem:location]];
+        [locationsBlockString appendString: @" "];
     }
     return locationsBlockString;
 
