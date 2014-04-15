@@ -43,6 +43,13 @@
         
     }
     
+    //enable imageview
+    _imageView.hidden = YES;
+    //disable add pic button
+    _addPic.hidden = NO;
+    
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -51,6 +58,7 @@
     
 }
 
+//delete later, since the add pic action will overtake this
 - (IBAction)takePhoto:(UIButton *)sender {
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -61,11 +69,29 @@
     [self presentViewController:picker animated:YES completion:NULL];
   
 }
-
-
-
-
+//delete later, since the submit action will overtake this
 - (IBAction)saveImage:(UIButton *)sender {
+    UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (IBAction)addPicture:(UIButton *)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+    //enable imageview
+    _imageView.hidden = NO;
+    //disable add pic button
+    _addPic.hidden = YES;
+    
+    
+}
+
+- (IBAction)submit:(UIButton *)sender {
+    //on submission, save image
     UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
@@ -100,8 +126,12 @@
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
-    
     [self presentViewController:picker animated:YES completion:NULL];
+    
+    //enable imageview
+    _imageView.hidden = NO;
+    //disable add pic button
+    _addPic.hidden = YES;
     
 }
 
