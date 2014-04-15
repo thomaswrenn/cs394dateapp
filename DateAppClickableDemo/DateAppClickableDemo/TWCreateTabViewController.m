@@ -165,7 +165,10 @@
     
     //[picker dismissViewControllerAnimated:YES completion:NULL];
     
-    originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+    //originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    //cropped picture
+    originalImage = [info valueForKey:UIImagePickerControllerEditedImage];
     [self.imageView setImage:originalImage];
     [picker dismissModalViewControllerAnimated:YES];
     
