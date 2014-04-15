@@ -38,7 +38,7 @@
 		7543999E18E24EF500C667BD /* DateAppClickableDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7543999D18E24EF500C667BD /* DateAppClickableDemoTests.m */; };
 		75D519DE18EB943300A15C92 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F477D18EB872C00EC038B /* CFNetwork.framework */; };
 		75D519DF18EB944000A15C92 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7543997118E24EF500C667BD /* CoreGraphics.framework */; };
-		75D519E018EB945000A15C92 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F477F18EB873E00EC038B /* CoreLocation.framework */; };
+		75D519E018EB945000A15C92 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F477F18EB873E00EC038B /* CoreLocation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		75D519E118EB945A00A15C92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F478118EB874900EC038B /* libz.dylib */; };
 		75D519E218EB946200A15C92 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F478918EB876E00EC038B /* StoreKit.framework */; };
 		75D519E318EB946900A15C92 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F478718EB876300EC038B /* Security.framework */; };
@@ -136,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75D519E018EB945000A15C92 /* CoreLocation.framework in Frameworks */,
 				75D519E518EB949E00A15C92 /* QuartzCore.framework in Frameworks */,
 				224A3AB418F5CFE500166EF7 /* AVFoundation.framework in Frameworks */,
 				224A3AB218F5CFDC00166EF7 /* OpenGLES.framework in Frameworks */,
@@ -147,7 +148,6 @@
 				75D519E418EB948D00A15C92 /* AudioToolbox.framework in Frameworks */,
 				75D519E318EB946900A15C92 /* Security.framework in Frameworks */,
 				75D519E118EB945A00A15C92 /* libz.dylib in Frameworks */,
-				75D519E018EB945000A15C92 /* CoreLocation.framework in Frameworks */,
 				75D519E718EB950700A15C92 /* Parse.framework in Frameworks */,
 				75D519DF18EB944000A15C92 /* CoreGraphics.framework in Frameworks */,
 				75D519DE18EB943300A15C92 /* CFNetwork.framework in Frameworks */,

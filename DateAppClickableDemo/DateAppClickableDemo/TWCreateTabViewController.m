@@ -8,9 +8,11 @@
 
 #import "TWCreateTabViewController.h"
 #import "GPUImage.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface TWCreateTabViewController (){
     UIImage *originalImage;
+    CLLocationManager *locationManager;
 }
 
 @end
@@ -24,6 +26,10 @@
         // Custom initialization
     }
     return self;
+}
+//return key makes the keyboard disappear
+-(IBAction)ReturnKeyButton:(id)sender{
+    [sender resignFirstResponder];
 }
 
 - (void)viewDidLoad {
@@ -43,9 +49,11 @@
         
     }
     
-    //enable imageview
+    _chooseLocation.selectedSegmentIndex = 1;
+
+    //disable imageview
     _imageView.hidden = YES;
-    //disable add pic button
+    //enable add pic button
     _addPic.hidden = NO;
     
     
@@ -58,21 +66,6 @@
     
 }
 
-//delete later, since the add pic action will overtake this
-- (IBAction)takePhoto:(UIButton *)sender {
-    
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    [self presentViewController:picker animated:YES completion:NULL];
-  
-}
-//delete later, since the submit action will overtake this
-- (IBAction)saveImage:(UIButton *)sender {
-    UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-}
 
 - (IBAction)addPicture:(UIButton *)sender {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -93,6 +86,34 @@
 - (IBAction)submit:(UIButton *)sender {
     //on submission, save image
     UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (IBAction)retakePic:(UIButton *)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+    
+}
+
+- (IBAction)locationToggle:(UISegmentedControl *)sender {
+    if (_chooseLocation.selectedSegmentIndex == 0) {
+        _locations.enabled = FALSE;
+        //get current location
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+        [locationManager startUpdatingLocation];
+        _locations.text = [NSString stringWithFormat:@"latitude: %f longitude: %f", locationManager.location.coordinate.latitude, locationManager.location.coordinate.longitude];
+    }
+    else{
+        _locations.enabled = TRUE;
+        _locations.text = @"";
+    }
+
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
@@ -145,9 +166,7 @@
     //[picker dismissViewControllerAnimated:YES completion:NULL];
     
     originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
     [self.imageView setImage:originalImage];
-    
     [picker dismissModalViewControllerAnimated:YES];
     
 }
@@ -155,6 +174,12 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+    //disable imageview
+    _imageView.hidden = YES;
+    //enable add pic button
+    _addPic.hidden = NO;
+    
     
 }
 

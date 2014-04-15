@@ -13,13 +13,15 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addPic;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *chooseLocation;
+@property (weak, nonatomic) IBOutlet UITextField *locations;
 
 - (IBAction)album:(UIButton *)sender;
-- (IBAction)takePhoto:(UIButton *)sender;
-- (IBAction)addFilter:(UIButton *)sender;
-- (IBAction)saveImage:(UIButton *)sender;
 - (IBAction)addPicture:(UIButton *)sender;
 - (IBAction)submit:(UIButton *)sender;
+- (IBAction)retakePic:(UIButton *)sender;
+- (IBAction)locationToggle:(UISegmentedControl *)sender;
+-(IBAction)ReturnKeyButton:(id)sender;
 
 
 @end
