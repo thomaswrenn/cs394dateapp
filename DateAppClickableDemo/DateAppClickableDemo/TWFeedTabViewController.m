@@ -15,7 +15,7 @@
 #import "TWFeedCell.h"
 #import "TWFeedTabViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "TWFeedTopCell.h"
 
 NSString *kFeedCellID = @"feedCellID";                          // UICollectionViewCell storyboard id
 
@@ -74,7 +74,7 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
         [self.feedDates addObject: itemModel];
         
     }
-    [self.feedCollectionView reloadData];
+    [self.tableView reloadData];
         
 }
 
@@ -102,7 +102,7 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
         itemModel.likes = [json objectForKey:@"likes"];
 
         [self.feedDates addObject: itemModel];
-        [self.feedCollectionView reloadData];
+        [self.tableView reloadData];
     }
 }
 
@@ -112,52 +112,109 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
     // Dispose of any resources that can be recreated.
 }
 
-# pragma mark - UICollectionViewDelegate/Datasource
+//# pragma mark - UICollectionViewDelegate/Datasource
+//
+//- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
+//{
+//    return self.feedDates.count;
+//
+//}
+//
+//- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
+//    return 1;
+//}
+//
+//- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: indexPath.row];
+//    TWFeedCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kFeedCellID forIndexPath:indexPath];
+//    // load the image for this cell
+//    NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.imageURLs[0]]];
+//    cell.topImage.image = [UIImage imageWithData:imageData];
+////    cell.topImage.layer.cornerRadius = 7.0;
+////    cell.topImage.clipsToBounds = YES;
+//    
+//    imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
+//    cell.userProfileImage.image = [UIImage imageWithData:imageData];
+//    cell.userProfileImage.layer.cornerRadius = 24.0;
+//    cell.userProfileImage.clipsToBounds = YES;
+//    
+//
+//    cell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
+//    cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments];
+//    cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
+//    cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
+//    return cell;
+//}
+//
+//#pragma mark – UICollectionViewDelegateFlowLayout
+//
+//// 1
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    return CGSizeMake(316, 487);
+//}
+//
+//// 3
+//- (UIEdgeInsets)collectionView:
+//(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+//    return UIEdgeInsetsMake(20, 0, 60, 0);
+//}
 
-- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
+
+#pragma mark - Table view data source
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.feedDates.count;
-
+    if (indexPath.row % 2  == 0) {//top
+        return 68;
+    }
+    return 341;
 }
 
-- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
     return 1;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: indexPath.row];
-    TWFeedCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kFeedCellID forIndexPath:indexPath];
-    // load the image for this cell
-    NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.imageURLs[0]]];
-    cell.topImage.image = [UIImage imageWithData:imageData];
-//    cell.topImage.layer.cornerRadius = 7.0;
-//    cell.topImage.clipsToBounds = YES;
+    // Return the number of rows in the section.
+    return self.feedDates.count * 2;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: (indexPath.row/2)];
     
-    imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
-    cell.userProfileImage.image = [UIImage imageWithData:imageData];
-    cell.userProfileImage.layer.cornerRadius = 24.0;
-    cell.userProfileImage.clipsToBounds = YES;
-    
+    if(indexPath.row % 2 == 0 ){//top one
+        TWFeedTopCell *cell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
+        
+        NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
+        cell.userProfileImage.image = [UIImage imageWithData:imageData];
+        cell.userProfileImage.layer.cornerRadius = 24.0;
+        cell.userProfileImage.clipsToBounds = YES;
+        
+        cell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
+        cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
 
-    cell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
-    cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments];
-    cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
-    cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
-    return cell;
+        return cell;
+    }
+    else{//bottom
+        TWFeedCell *cell = (TWFeedCell *)[tableView dequeueReusableCellWithIdentifier:@"BottomCell"];
+        NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.imageURLs[0]]];
+        cell.topImage.image = [UIImage imageWithData:imageData];
+        cell.topImage.contentMode = UIViewContentModeScaleAspectFit;
+        
+        cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
+        cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments];
+
+        return cell;
+    }
+
 }
 
-#pragma mark – UICollectionViewDelegateFlowLayout
 
-// 1
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(316, 487);
-}
-
-// 3
-- (UIEdgeInsets)collectionView:
-(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(20, 0, 60, 0);
-}
 
 @end
