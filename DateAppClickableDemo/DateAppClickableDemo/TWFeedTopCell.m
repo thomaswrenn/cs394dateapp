@@ -1,14 +1,14 @@
 //
-//  TWFeedCell.m
+//  TWFeedTopCell.m
 //  DateAppClickableDemo
 //
-//  Created by Thomas Wrenn on 3/31/14.
+//  Created by Jessica Wu on 5/2/14.
 //  Copyright (c) 2014 Thomas Wrenn. All rights reserved.
 //
 
-#import "TWFeedCell.h"
+#import "TWFeedTopCell.h"
 
-@implementation TWFeedCell
+@implementation TWFeedTopCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -27,7 +27,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
+
     // Configure the view for the selected state
 }
 
