@@ -40,31 +40,26 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
     
     
     NSString *imgTemp1 = @"http://2.bp.blogspot.com/-kIcv0j4joXk/UNjA-UtjuWI/AAAAAAAAAww/QLAtP5pe7IA/s1600/best-date-nights-san-diego.jpg";
-    
     NSString *imgTemp2 = @"http://engineering.nyu.edu/files/imagecache/profile_full/pictures/picture-204.jpg";
-    
     NSString *imgTemp3 = @"http://www.themartellexperience.com/wp-content/uploads/2010/08/Restaurant-for-Romantic-Date-in-Moncton-New-Brunswick-Canada.jpg";
+
     
     for (NSInteger i = 0; i < 3; i++) {
         TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
         
-        // TODO Assign each thing to the proper thing
         [itemModel.username setString:@"Jessica Wu"];
         [itemModel.userProfileImageURL setString:imgTemp2];
         itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] timeIntervalSince1970]];
         itemModel.imageURLs = [NSMutableArray arrayWithObjects:imgTemp1,imgTemp3, nil];
         NSArray *keys = [NSArray arrayWithObjects:@"user", @"text",@"\n", nil];
         NSArray *objects = [NSArray arrayWithObjects:@"Jessica", @"awesome date!",@"\n", nil];
-        NSDictionary *dictionary1 = [NSDictionary dictionaryWithObjects:objects
-                                                               forKeys:keys];
+        NSDictionary *dictionary1 = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
         
         NSArray *objects2 = [NSArray arrayWithObjects:@"Tom", @"Woah nice sunset :)",@"\n", nil];
-        NSDictionary *dictionary2 = [NSDictionary dictionaryWithObjects:objects2
-                                                                forKeys:keys];
+        NSDictionary *dictionary2 = [NSDictionary dictionaryWithObjects:objects2 forKeys:keys];
         
         NSArray *objects3 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
-        NSDictionary *dictionary3 = [NSDictionary dictionaryWithObjects:objects3
-                                                                forKeys:keys];
+        NSDictionary *dictionary3 = [NSDictionary dictionaryWithObjects:objects3 forKeys:keys];
         
         itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, dictionary3, nil];
         itemModel.locations = [NSMutableArray arrayWithObjects:@"Brooklyn", @"NY", nil];
@@ -74,8 +69,9 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
         [self.feedDates addObject: itemModel];
         
     }
+    // [self.feedCollectionView reloadSections:];
+    [self.feedCollectionView reloadItemsAtIndexPaths:self.feedCollectionView.indexPathsForVisibleItems];
     [self.feedCollectionView reloadData];
-        
 }
 
 - (void)fetchedData:(NSData *)responseData {
@@ -92,7 +88,7 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
         NSDictionary *json = jsonFeedItems[i];
         TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
         
-        // TODO Assign each thing to the proper thing
+        //TODO: Assign each key to the proper thing
         itemModel.username = [json objectForKey:@"username"];
         itemModel.userProfileImageURL = [json objectForKey:@"userProfileImageURL"];
         itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[json objectForKey:@"timePosted"] doubleValue]];
@@ -131,8 +127,8 @@ NSString *kFeedCellID = @"feedCellID";                          // UICollectionV
     // load the image for this cell
     NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.imageURLs[0]]];
     cell.topImage.image = [UIImage imageWithData:imageData];
-//    cell.topImage.layer.cornerRadius = 7.0;
-//    cell.topImage.clipsToBounds = YES;
+    // cell.topImage.layer.cornerRadius = 7.0;
+    // cell.topImage.clipsToBounds = YES;
     
     imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
     cell.userProfileImage.image = [UIImage imageWithData:imageData];

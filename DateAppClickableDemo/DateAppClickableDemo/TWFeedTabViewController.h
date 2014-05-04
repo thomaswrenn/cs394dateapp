@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TWFeedTabViewController : UIViewController
+@interface TWFeedTabViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property(nonatomic, weak) IBOutlet UICollectionView *feedCollectionView;
 

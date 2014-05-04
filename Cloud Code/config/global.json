@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Date App": {
+      "applicationId": "OoHIkXP4veqn7ch2kLv5UojFwQzyFC37QJDBaoir",
+      "masterKey": "00fmPvE2qjF2VhBsGckO83tvi4Q9e22WQ3GaycM7"
+    },
+    "_default": {
+            "link": "Date App"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.16"
+    }
+}
