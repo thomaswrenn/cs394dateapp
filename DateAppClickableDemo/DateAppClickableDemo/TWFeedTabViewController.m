@@ -301,16 +301,11 @@ BOOL isFirstTimeAddingHeaderCell = true;
     }
 }
 
--(void) updateTopCell: (UIScrollView *)scrollView forNextCell:(BOOL) nextCell{
+-(void) updateTopCell: (UIScrollView *)scrollView{
     int index = (int)scrollView.contentOffset.y / (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT);
-    if( nextCell ){
-        index++;
-    }
-    
+
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
-    
-//    TWFeedTopCell *cell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
     
     NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
     topCell.userProfileImage.image = [UIImage imageWithData:imageData];
@@ -319,7 +314,6 @@ BOOL isFirstTimeAddingHeaderCell = true;
     [topCell.username setText:itemModel.username];
     
     topCell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
-//    topCell = cell;
 }
 
 -(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -327,11 +321,8 @@ BOOL isFirstTimeAddingHeaderCell = true;
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    NSIndexPath *firstCell = [[self.tableView indexPathsForVisibleRows] objectAtIndex:0];
-//    UITableViewCell *headerCell = [self.tableView cellForRowAtIndexPath:firstCell];
-    
+
     if( scrollView.contentOffset.y < 0 ){
-//        [[self.view superview] insertSubview:topCell aboveSubview:self.tableView];
         [[self.view superview] sendSubviewToBack: topCell];
     }
     else{
@@ -340,27 +331,25 @@ BOOL isFirstTimeAddingHeaderCell = true;
     [self.tableView beginUpdates];
     
     
-//    NSLog(@"scrollView: %f", scrollView.contentOffset.y);
     NSLog(@"index at: %d", (int)scrollView.contentOffset.y / (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT));
     if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) < (BOTTOM_CELL_HEIGHT + TOP_CELL_HEIGHT) && ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) >=  BOTTOM_CELL_HEIGHT){
         
-        NSLog(@"im touching it other");
+//        NSLog(@"im touching it");
         
         int pos = (BOTTOM_CELL_HEIGHT) - (int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT);
-        NSLog(@"my pos: %d", pos);
+//        NSLog(@"my pos: %d", pos);
         topCell.frame = CGRectMake(0,pos,topCell.frame.size.width,topCell.frame.size.height);
         
-        [self updateTopCell:scrollView forNextCell:NO];
+        [self updateTopCell:scrollView];
     }
-    else if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) == 0 /*&& ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT) >= 0 ) */){
-        NSLog(@"im on it!!!!!!!!!!!");
+    else if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) == 0 ){
+//        NSLog(@"im on it!!!!!!!!!!!");
         [self setTopCell];
-//        [self updateTopCell:scrollView forNextCell:NO];
 
     }
     else{
         topCell.frame = CGRectMake(0,0,topCell.frame.size.width,topCell.frame.size.height);
-        [self updateTopCell:scrollView forNextCell:NO];
+        [self updateTopCell:scrollView];
 
     }
     [self.tableView endUpdates];
