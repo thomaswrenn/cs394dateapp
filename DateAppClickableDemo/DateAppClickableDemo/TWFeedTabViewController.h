@@ -7,23 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#define TOP_CELL_HEIGHT 68
+#define BOTTOM_CELL_HEIGHT 341
 
-@interface TWFeedTabViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface TWFeedTabViewController : UITableViewController
 
-@property(nonatomic, weak) IBOutlet UICollectionView *feedCollectionView;
+//@property(nonatomic, weak) IBOutlet UICollectionView *feedCollectionView;
 
 @property (strong, nonatomic) NSMutableArray *feedDates;
 
 
-- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
-
-- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView;
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
-
-- (UIEdgeInsets)collectionView:
-(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
+//- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
+//
+//- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView;
+//
+//- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+//
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+//
+//- (UIEdgeInsets)collectionView:
+//(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
 
 @end
