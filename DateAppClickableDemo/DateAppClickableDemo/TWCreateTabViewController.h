@@ -24,4 +24,26 @@
 -(IBAction)ReturnKeyButton:(id)sender;
 
 
+//overlay
+- (IBAction)done:(id)sender;
+- (IBAction)takePhoto:(id)sender;
+- (IBAction)startStop:(id)sender;
+- (IBAction)timedTakePhoto:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UIView *cameraOverlay;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *takePictureButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *timedButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *startStopButton;
+
+//timers, if using it
+@property (nonatomic, retain) NSTimer *tickTimer;
+@property (nonatomic, retain) NSTimer *cameraTimer;
+
+
+@property (nonatomic, retain) UIImagePickerController *imagePickerController;
+
+
 @end
