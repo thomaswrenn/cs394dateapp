@@ -10,6 +10,13 @@
 #import "GPUImage.h"
 #import <CoreLocation/CoreLocation.h>
 
+
+enum
+{
+	kOneShot,       // user wants to take a delayed single shot
+	kRepeatingShot  // user wants to take repeating shots
+};
+
 @interface TWCreateTabViewController (){
     UIImage *originalImage;
     CLLocationManager *locationManager;
@@ -18,6 +25,7 @@
 @end
 
 @implementation TWCreateTabViewController
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,6 +55,9 @@
         
         [myAlertView show];
         
+        self.imagePickerController.cameraOverlayView = [[TWCreateTabViewController alloc ]initWithNibName:@"OverlayViewController" bundle:nil].view;
+
+    
     }
     
     _chooseLocation.selectedSegmentIndex = 1;
@@ -68,18 +79,41 @@
 
 
 - (IBAction)addPicture:(UIButton *)sender {
+    
+    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    
+    picker.showsCameraControls = NO;
+    //picker.navigationBarHidden = YES;
+    
+    //picker.cameraOverlayView = [[UIView alloc ]initWithNibName:@"overlay" bundle:nil];
+    
+    [[UINib nibWithNibName:@"overlay" bundle:nil] instantiateWithOwner:self options:nil];
+    
+    /*
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button addTarget:self
+               action:@selector(aMethod:)
+     forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:@"Show View" forState:UIControlStateNormal];
+    button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+    [picker.cameraOverlayView addSubview:button];
+     */
+    
+    picker.cameraOverlayView = self.cameraOverlay;
+    //[picker.cameraOverlayView addConstraint:[NSLayoutConstraint constraintsWithVisualFormat:@"|-50-[cameraOverlay]-50-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self)]];
+    
     [self presentViewController:picker animated:YES completion:NULL];
+
     
     //enable imageview
     _imageView.hidden = NO;
     //disable add pic button
     _addPic.hidden = YES;
-    
     
 }
 
@@ -186,17 +220,47 @@
     
 }
 
-/*
-#pragma mark - Navigation
+//
+//
+//overlay camera actions
+//
+//
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+#pragma mark Camera Actions
+
+- (IBAction)done:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    // dismiss the camera
+    //
+    // but not if it's still taking timed pictures
+    if (![self.cameraTimer isValid])
+        [self finishAndUpdate];
 }
-*/
 
+// this will take a timed photo, to be taken 5 seconds from now
+//
+
+- (IBAction)takePhoto:(id)sender
+{
+    [self.imagePickerController takePicture];
+}
+
+
+
+- (void)finishAndUpdate
+{
+    //[self.imagePickerController didFinishWithCamera];  // tell our delegate we are done with the camera
+    
+    // restore the state of our overlay toolbar buttons
+    self.cancelButton.enabled = YES;
+    self.takePictureButton.enabled = YES;
+    self.timedButton.enabled = YES;
+    self.startStopButton.enabled = YES;
+    self.startStopButton.title = @"Start";
+}
+
+// this get called when an image has been chosen from the library or taken from the camera
+//
 
 @end
 
