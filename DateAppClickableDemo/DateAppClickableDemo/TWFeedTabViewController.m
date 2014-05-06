@@ -16,21 +16,28 @@
 #import "TWFeedTabViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TWFeedTopCell.h"
+#import "TWCommentViewController.h"
+#import "TWTapGestureRecognizer.h"
 
 NSString *kFeedCellID = @"feedCellID";                          // UICollectionViewCell storyboard id
 //BOOL canScrollHeader = false;
 BOOL isFirstCell = true;
 NSString *title = @"asdasdsda";
 //TWFeedTopCell *topCell;
-BOOL isFirstTimeAddingHeaderCell = true;
-
-@interface TWFeedTabViewController ()
+BOOL isFirstTimeAddingHeaderCell = YES;
+NSMutableArray* commentsToSendToNextView;
+BOOL isContentYNeg = NO;
+@interface TWFeedTabViewController()
 @property (strong, nonatomic) TWFeedTopCell *topCell;
 @end
 
 @implementation TWFeedTabViewController
 @synthesize topCell;
 
+
+-(void) viewWillAppear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
 
 - (void)viewDidLoad
 {
@@ -124,53 +131,25 @@ BOOL isFirstTimeAddingHeaderCell = true;
     // Dispose of any resources that can be recreated.
 }
 
-//# pragma mark - UICollectionViewDelegate/Datasource
-//
-//- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
-//{
-//    return self.feedDates.count;
-//
-//}
-//
-//- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
-//    return 1;
-//}
-//
-//- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: indexPath.row];
-//    TWFeedCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kFeedCellID forIndexPath:indexPath];
-//    // load the image for this cell
-//    NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.imageURLs[0]]];
-//    cell.topImage.image = [UIImage imageWithData:imageData];
-////    cell.topImage.layer.cornerRadius = 7.0;
-////    cell.topImage.clipsToBounds = YES;
-//    
-//    imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
-//    cell.userProfileImage.image = [UIImage imageWithData:imageData];
-//    cell.userProfileImage.layer.cornerRadius = 24.0;
-//    cell.userProfileImage.clipsToBounds = YES;
-//    
-//
-//    cell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
-//    cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments];
-//    cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
-//    cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
-//    return cell;
-//}
-//
-//#pragma mark – UICollectionViewDelegateFlowLayout
-//
-//// 1
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    return CGSizeMake(316, 487);
-//}
-//
-//// 3
-//- (UIEdgeInsets)collectionView:
-//(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-//    return UIEdgeInsetsMake(20, 0, 60, 0);
-//}
+
+
+-(void) commentBtnPressed: (TWTapGestureRecognizer *) sender{
+    commentsToSendToNextView = sender.commentsArray;
+    [self performSegueWithIdentifier:@"commentSegue" sender:self];
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"commentSegue"]){
+        TWCommentViewController *vc = [segue destinationViewController];
+        vc.comments = commentsToSendToNextView;
+        vc.hidesBottomBarWhenPushed = YES;
+    }
+
+    
+}
+
 
 
 #pragma mark - Table view data source
@@ -259,6 +238,16 @@ BOOL isFirstTimeAddingHeaderCell = true;
         cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
         cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments];
         cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
+        
+        
+        [cell.commentsBlock setUserInteractionEnabled:YES];
+        TWTapGestureRecognizer *tgr = [[TWTapGestureRecognizer alloc] initWithTarget:self action:@selector(commentBtnPressed:)];
+        tgr.commentsArray = itemModel.comments;
+        [tgr setNumberOfTapsRequired:1];
+        [cell.commentsBlock addGestureRecognizer:tgr];
+        
+        
+        
         return cell;
     }
 
@@ -269,7 +258,7 @@ BOOL isFirstTimeAddingHeaderCell = true;
 -(BOOL) shouldScrollHeader:(UIScrollView *)scrollView{
     int minSizeDiff = 3;
     
-    NSLog(@"scrollView: %f", scrollView.contentOffset.y);
+//    NSLog(@"scrollView: %f", scrollView.contentOffset.y);
     if ( scrollView.contentOffset.y == BOTTOM_CELL_HEIGHT ){
         return false;
     }
@@ -316,34 +305,28 @@ BOOL isFirstTimeAddingHeaderCell = true;
     topCell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
 }
 
--(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    NSLog(@"scrollView: %f", scrollView.contentOffset.y);
-}
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
     if( scrollView.contentOffset.y < 0 ){
+        isContentYNeg = YES;
         [[self.view superview] sendSubviewToBack: topCell];
     }
     else{
-        [[self.view superview] bringSubviewToFront: topCell];
+        if (isContentYNeg) {
+            isContentYNeg = NO;
+            [[self.view superview] bringSubviewToFront: topCell];
+        }
     }
-    [self.tableView beginUpdates];
     
     
-    NSLog(@"index at: %d", (int)scrollView.contentOffset.y / (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT));
     if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) < (BOTTOM_CELL_HEIGHT + TOP_CELL_HEIGHT) && ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) >=  BOTTOM_CELL_HEIGHT){
-        
-//        NSLog(@"im touching it");
-        
         int pos = (BOTTOM_CELL_HEIGHT) - (int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT);
-//        NSLog(@"my pos: %d", pos);
         topCell.frame = CGRectMake(0,pos,topCell.frame.size.width,topCell.frame.size.height);
         
         [self updateTopCell:scrollView];
     }
     else if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) == 0 ){
-//        NSLog(@"im on it!!!!!!!!!!!");
         [self setTopCell];
 
     }
@@ -352,7 +335,6 @@ BOOL isFirstTimeAddingHeaderCell = true;
         [self updateTopCell:scrollView];
 
     }
-    [self.tableView endUpdates];
     return;
     
     

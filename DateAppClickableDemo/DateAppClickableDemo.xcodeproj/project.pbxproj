@@ -13,6 +13,10 @@
 		224A3AB218F5CFDC00166EF7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224A3AB118F5CFDC00166EF7 /* OpenGLES.framework */; };
 		224A3AB418F5CFE500166EF7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224A3AB318F5CFE500166EF7 /* AVFoundation.framework */; };
 		22DC092C18FCC40800A0E217 /* big add.png in Resources */ = {isa = PBXBuildFile; fileRef = 22DC092B18FCC40800A0E217 /* big add.png */; };
+		3C29A4B3191803B900690140 /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C29A4B2191803B900690140 /* DAKeyboardControl.m */; };
+		3C29A4B81918389700690140 /* TWCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C29A4B71918389700690140 /* TWCommentViewController.m */; };
+		3C29A4BB1918451700690140 /* TWTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C29A4BA1918451700690140 /* TWTapGestureRecognizer.m */; };
+		3C29A4BE191846E700690140 /* TWCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C29A4BD191846E700690140 /* TWCommentTableViewCell.m */; };
 		3CB7BAB91914676800DDBD5C /* TWFeedTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7BAB81914676800DDBD5C /* TWFeedTopCell.m */; };
 		4C3471B318F1C5B400EF0FE8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3471B218F1C5B400EF0FE8 /* MapKit.framework */; };
 		6FA62C907DD347BB8D18C6D5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE8E33D5D7044F4486779D26 /* libPods.a */; };
@@ -91,6 +95,14 @@
 		224A3AB118F5CFDC00166EF7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		224A3AB318F5CFE500166EF7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		22DC092B18FCC40800A0E217 /* big add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "big add.png"; sourceTree = "<group>"; };
+		3C29A4B1191803B900690140 /* DAKeyboardControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControl.h; sourceTree = "<group>"; };
+		3C29A4B2191803B900690140 /* DAKeyboardControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControl.m; sourceTree = "<group>"; };
+		3C29A4B61918389700690140 /* TWCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCommentViewController.h; sourceTree = "<group>"; };
+		3C29A4B71918389700690140 /* TWCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWCommentViewController.m; sourceTree = "<group>"; };
+		3C29A4B91918451700690140 /* TWTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTapGestureRecognizer.h; sourceTree = "<group>"; };
+		3C29A4BA1918451700690140 /* TWTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTapGestureRecognizer.m; sourceTree = "<group>"; };
+		3C29A4BC191846E700690140 /* TWCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCommentTableViewCell.h; sourceTree = "<group>"; };
+		3C29A4BD191846E700690140 /* TWCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWCommentTableViewCell.m; sourceTree = "<group>"; };
 		3CB7BAB71914676800DDBD5C /* TWFeedTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFeedTopCell.h; sourceTree = "<group>"; };
 		3CB7BAB81914676800DDBD5C /* TWFeedTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFeedTopCell.m; sourceTree = "<group>"; };
 		4C3471B218F1C5B400EF0FE8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -198,6 +210,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3C29A4B0191803B900690140 /* DAKeyboardControl */ = {
+			isa = PBXGroup;
+			children = (
+				3C29A4B1191803B900690140 /* DAKeyboardControl.h */,
+				3C29A4B2191803B900690140 /* DAKeyboardControl.m */,
+			);
+			path = DAKeyboardControl;
+			sourceTree = SOURCE_ROOT;
+		};
 		7543996318E24EF500C667BD = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +271,7 @@
 		7543997518E24EF500C667BD /* DateAppClickableDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3C29A4B0191803B900690140 /* DAKeyboardControl */,
 				75F610EE190F1585007B7F8E /* JBWBuilders */,
 				75F610E3190F1038007B7F8E /* generated */,
 				752F477218EB5FF200EC038B /* TWUtility.h */,
@@ -265,6 +287,12 @@
 				753668FD18EA3A7B005ACE73 /* TWFeedItemModel.m */,
 				753668F718EA27EF005ACE73 /* TWFeedCell.h */,
 				753668F818EA27EF005ACE73 /* TWFeedCell.m */,
+				3C29A4B61918389700690140 /* TWCommentViewController.h */,
+				3C29A4B71918389700690140 /* TWCommentViewController.m */,
+				3C29A4B91918451700690140 /* TWTapGestureRecognizer.h */,
+				3C29A4BA1918451700690140 /* TWTapGestureRecognizer.m */,
+				3C29A4BC191846E700690140 /* TWCommentTableViewCell.h */,
+				3C29A4BD191846E700690140 /* TWCommentTableViewCell.m */,
 				7543998718E24EF500C667BD /* TWExploreTabViewController.h */,
 				7543998818E24EF500C667BD /* TWExploreTabViewController.m */,
 				753668F418EA254C005ACE73 /* TWProfileTabViewController.h */,
@@ -563,13 +591,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C29A4BE191846E700690140 /* TWCommentTableViewCell.m in Sources */,
 				753668F918EA27EF005ACE73 /* TWFeedCell.m in Sources */,
+				3C29A4B81918389700690140 /* TWCommentViewController.m in Sources */,
 				753668F318EA2538005ACE73 /* TWCreateTabViewController.m in Sources */,
+				3C29A4BB1918451700690140 /* TWTapGestureRecognizer.m in Sources */,
 				752F477418EB5FF200EC038B /* TWUtility.m in Sources */,
 				7543998618E24EF500C667BD /* TWFeedTabViewController.m in Sources */,
 				7543998918E24EF500C667BD /* TWExploreTabViewController.m in Sources */,
 				753668F618EA254C005ACE73 /* TWProfileTabViewController.m in Sources */,
 				75F610F4190F1585007B7F8E /* NSURL+JBWBuilders.m in Sources */,
+				3C29A4B3191803B900690140 /* DAKeyboardControl.m in Sources */,
 				753668FE18EA3A7B005ACE73 /* TWFeedItemModel.m in Sources */,
 				75F610F3190F1585007B7F8E /* NSDate+JBWBuilders.m in Sources */,
 				7543997C18E24EF500C667BD /* main.m in Sources */,
