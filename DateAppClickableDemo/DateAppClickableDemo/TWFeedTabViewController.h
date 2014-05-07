@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #define TOP_CELL_HEIGHT 68
-#define BOTTOM_CELL_HEIGHT 341
+#define BOTTOM_CELL_HEIGHT 327
 
 @interface TWFeedTabViewController : UITableViewController
 

@@ -18,6 +18,7 @@
 #import "TWFeedTopCell.h"
 #import "TWCommentViewController.h"
 #import "TWTapGestureRecognizer.h"
+#import "UIImageView+WebCache.h"
 
 NSString *kFeedCellID = @"feedCellID";                          // UICollectionViewCell storyboard id
 //BOOL canScrollHeader = false;
@@ -45,13 +46,15 @@ BOOL isContentYNeg = NO;
 	// Do any additional setup after loading the view, typically from a nib.
     self.feedDates = [[NSMutableArray alloc] init];
     
+    topCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
+    
 //    dispatch_async(kBgQueue, ^{
 //        NSData* data = [NSData dataWithContentsOfURL:
 //                        kfeedItemsJSONURL];
 //        [self performSelectorOnMainThread:@selector(fetchedData:)
 //                               withObject:data waitUntilDone:YES];
 //    });
-    
+
     
     NSString *imgTemp1 = @"http://2.bp.blogspot.com/-kIcv0j4joXk/UNjA-UtjuWI/AAAAAAAAAww/QLAtP5pe7IA/s1600/best-date-nights-san-diego.jpg";
     
@@ -81,7 +84,20 @@ BOOL isContentYNeg = NO;
         NSDictionary *dictionary3 = [NSDictionary dictionaryWithObjects:objects3
                                                                 forKeys:keys];
         
-        itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, dictionary3, nil];
+        NSArray *objects4 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
+        NSDictionary *dictionary4 = [NSDictionary dictionaryWithObjects:objects4
+                                                                forKeys:keys];
+        
+        NSArray *objects5 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
+        NSDictionary *dictionary5 = [NSDictionary dictionaryWithObjects:objects5
+                                                                forKeys:keys];
+        
+        NSArray *objects6 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too! Awesome Awesome Awesome Awesome",@"\n", nil];
+        NSDictionary *dictionary6 = [NSDictionary dictionaryWithObjects:objects6
+                                                                forKeys:keys];
+        
+        
+        itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, dictionary3, dictionary4, dictionary5, dictionary6, nil];
         itemModel.locations = [NSMutableArray arrayWithObjects:@"Brooklyn", @"NY", nil];
         itemModel.likes = [NSMutableArray arrayWithObjects:@"a",@"b",@"c",@"d", nil];
 
@@ -193,22 +209,27 @@ BOOL isContentYNeg = NO;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if( self.feedDates.count < 1 ){//empty?
+        return [tableView dequeueReusableCellWithIdentifier:@"TopCell"];
+    }
+    
+    
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: (indexPath.row/2)];
     
     if( isFirstCell ){
         isFirstCell = false;
         
         topCell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
+
+        [topCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
         
-        NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
-        topCell.userProfileImage.image = [UIImage imageWithData:imageData];
         topCell.userProfileImage.layer.cornerRadius = 24.0;
         topCell.userProfileImage.clipsToBounds = YES;
         
         [topCell.username setText:itemModel.username];
         topCell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
         
-
+        topCell.selectionStyle = UITableViewCellSelectionStyleBlue;
         
     }
     
@@ -217,22 +238,23 @@ BOOL isContentYNeg = NO;
     if(indexPath.row % 2 == 0 ){//top one
         
         TWFeedTopCell *cell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
-        
-        NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
-        cell.userProfileImage.image = [UIImage imageWithData:imageData];
+
+        [cell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
         cell.userProfileImage.layer.cornerRadius = 24.0;
         cell.userProfileImage.clipsToBounds = YES;
+        
+        
         [cell.username setText:itemModel.username];
         
         cell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
         
-
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         return cell;
     }
     else{//bottom
         TWFeedCell *cell = (TWFeedCell *)[tableView dequeueReusableCellWithIdentifier:@"BottomCell"];
-        NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.imageURLs[0]]];
-        cell.topImage.image = [UIImage imageWithData:imageData];
+
+        [ cell.topImage setImageWithURL:[NSURL URLWithString:itemModel.imageURLs[0]]];
         cell.topImage.contentMode = UIViewContentModeScaleAspectFit;
         
         cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
@@ -247,7 +269,7 @@ BOOL isContentYNeg = NO;
         [cell.commentsBlock addGestureRecognizer:tgr];
         
         
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 
@@ -258,7 +280,6 @@ BOOL isContentYNeg = NO;
 -(BOOL) shouldScrollHeader:(UIScrollView *)scrollView{
     int minSizeDiff = 3;
     
-//    NSLog(@"scrollView: %f", scrollView.contentOffset.y);
     if ( scrollView.contentOffset.y == BOTTOM_CELL_HEIGHT ){
         return false;
     }
@@ -275,7 +296,7 @@ BOOL isContentYNeg = NO;
         [topCell removeFromSuperview];
         
         TWFeedTopCell* feedCell = (TWFeedTopCell*) cell;
-        topCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
+        
         
         topCell.userProfileImage.image = feedCell.userProfileImage.image;
         topCell.userProfileImage.layer.cornerRadius = 24.0;
@@ -291,13 +312,20 @@ BOOL isContentYNeg = NO;
 }
 
 -(void) updateTopCell: (UIScrollView *)scrollView{
+    if( self.feedDates.count < 1 ){
+        return;
+    }
     int index = (int)scrollView.contentOffset.y / (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT);
 
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
     
-    NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
-    topCell.userProfileImage.image = [UIImage imageWithData:imageData];
+//    NSData * imageData = [NSData dataWithContentsOfURL: [NSURL URLWithString: itemModel.userProfileImageURL]];
+//    topCell.userProfileImage.image = [UIImage imageWithData:imageData];
+//    
+    [topCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+    
+    
     topCell.userProfileImage.layer.cornerRadius = 24.0;
     topCell.userProfileImage.clipsToBounds = YES;
     [topCell.username setText:itemModel.username];
@@ -307,27 +335,26 @@ BOOL isContentYNeg = NO;
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
+    if( self.feedDates.count < 1 ){
+        return;
+    }
     if( scrollView.contentOffset.y < 0 ){
         isContentYNeg = YES;
         [[self.view superview] sendSubviewToBack: topCell];
     }
     else{
-        if (isContentYNeg) {
-            isContentYNeg = NO;
-            [[self.view superview] bringSubviewToFront: topCell];
-        }
+        [[self.view superview] bringSubviewToFront: topCell];
     }
     
     
-    if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) < (BOTTOM_CELL_HEIGHT + TOP_CELL_HEIGHT) && ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) >=  BOTTOM_CELL_HEIGHT){
+    if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) < (BOTTOM_CELL_HEIGHT + TOP_CELL_HEIGHT) && ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) >=  BOTTOM_CELL_HEIGHT){//touching other cell, moving other cell
         int pos = (BOTTOM_CELL_HEIGHT) - (int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT);
         topCell.frame = CGRectMake(0,pos,topCell.frame.size.width,topCell.frame.size.height);
         
         [self updateTopCell:scrollView];
     }
     else if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) == 0 ){
-        [self setTopCell];
+        [self setTopCell];//replacing cell
 
     }
     else{
@@ -343,16 +370,6 @@ BOOL isContentYNeg = NO;
 }
     
 
-
-//- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return TOP_CELL_HEIGHT;
-//}
-//
-//- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-////    topCell.backgroundColor = tableView.backgroundColor;
-//    topCell.backgroundColor = [UIColor greenColor];
-//    return topCell;
-//}
 
 
 @end
