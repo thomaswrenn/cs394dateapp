@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TWCommentTableViewCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UILabel *commentLabel;
+
+@property (strong, nonatomic) IBOutlet UITextView *commentLabel;
 
 @end

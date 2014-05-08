@@ -23,6 +23,8 @@
 @synthesize comments,toolbar,commentField,tableview;
 
 CGRect keyboardFrame;
+CGRect tvFrameBefore;//keyboard
+CGRect tvFrameAfter;//keyboard
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,6 +44,12 @@ CGRect keyboardFrame;
 
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    
+    
+    if( comments.count > 0 ){
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
+        [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
 }
 
 - (void)viewDidLoad
@@ -49,7 +57,9 @@ CGRect keyboardFrame;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    tvFrameBefore = tableview.frame;
+    tvFrameAfter = tableview.frame;
+
     //keyboard
     self.view.keyboardTriggerOffset = toolbar.bounds.size.height;
     __weak typeof(UIToolbar) *weakToolbar = toolbar;
@@ -63,11 +73,36 @@ CGRect keyboardFrame;
         weakToolbar.frame = toolBarFrame;
         
         CGRect tableViewFrame = weakTableview.frame;
+        
         tableViewFrame.size.height = toolBarFrame.origin.y;
+        tvFrameAfter.size.height = toolBarFrame.origin.y;
         weakTableview.frame = tableViewFrame;
     }];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
 }
+
+- (void)keyboardDidShow: (NSNotification *) notif{
+    // Do something here
+    tableview.frame = tvFrameAfter;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
+    [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+}
+
+- (void)keyboardDidHide: (NSNotification *) notif{
+    // Do something here
+    tableview.frame = tvFrameBefore;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -76,7 +111,12 @@ CGRect keyboardFrame;
 }
 
 - (IBAction)addComments:(id)sender {
+    if( [commentField.text isEqualToString:@""] ){
+        return;
+    }
+    
     NSString* text = commentField.text;
+    
     NSString* myName = @"Jessica";
     
     NSArray *keys = [NSArray arrayWithObjects:@"user", @"text",@"\n", nil];
@@ -113,10 +153,19 @@ CGRect keyboardFrame;
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+        NSLog(@"size: %f",keyboardFrame.origin.y);
+        if( keyboardFrame.origin.y == 0 || keyboardFrame.origin.y > self.tableview.frame.size.height){
+            return;
+        }
         self.view.keyboardTriggerOffset = toolbar.bounds.size.height;
         CGRect toolBarFrame = toolbar.frame;
         toolBarFrame.origin.y = keyboardFrame.origin.y - toolBarFrame.size.height;
         toolbar.frame = toolBarFrame;
+        
+        tableview.frame = tvFrameAfter;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
+        [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+
     }
 }
 
