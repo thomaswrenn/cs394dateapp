@@ -22,7 +22,7 @@
 @implementation TWCommentViewController
 @synthesize comments,toolbar,commentField,tableview;
 
-int MARGIN = 20;
+int MARGIN = 0;
 CGRect keyboardFrame;
 CGRect tvFrameBefore;//keyboard
 CGRect tvFrameAfter;//keyboard
@@ -41,12 +41,10 @@ CGRect tvFrameAfter;//keyboard
     [self.view removeKeyboardControl];
 }
 
-
-
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    [self scrollTable];
+    [self scrollTable:NO];
 }
 
 - (void)viewDidLoad
@@ -95,26 +93,22 @@ CGRect tvFrameAfter;//keyboard
     // Do something here
     tableview.frame = tvFrameAfter;
     
-    [self scrollTable];
+    [self scrollTable:NO];
 }
 
 - (void)keyboardDidHide: (NSNotification *) notif{
     // Do something here
-    [self scrollTable];
+    [self scrollTable:YES];
     tableview.frame = tvFrameBefore;
     
-    [self scrollTable];
+    [self scrollTable:YES];
 }
 
--(void) scrollTable{
+-(void) scrollTable: (BOOL) animated{
     if( comments.count > 0 ){
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
-        [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
     }
-//
-//    CGFloat height = self.tableview.contentSize.height - self.tableview.bounds.size.height;
-//    [self.tableview setContentOffset:CGPointMake(0, height) animated:YES];
-//    
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,31 +135,16 @@ CGRect tvFrameAfter;//keyboard
     
     [tableview reloadData];
     
-    [self scrollTable];
-
-    
-
+    [self scrollTable:NO];
 
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - UITableViewDelegate
-
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
-        NSLog(@"size: %f",keyboardFrame.origin.y);
+//        NSLog(@"size: %f",keyboardFrame.origin.y);
         if( keyboardFrame.origin.y == 0 || keyboardFrame.origin.y > self.tableview.frame.size.height){
             return;
         }
@@ -175,24 +154,20 @@ CGRect tvFrameAfter;//keyboard
         toolbar.frame = toolBarFrame;
         
         tableview.frame = tvFrameAfter;
-        [self scrollTable];
+        [self scrollTable:NO];
 
     }
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return [comments count];
 }
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -222,28 +197,20 @@ CGRect tvFrameAfter;//keyboard
 
     TWCommentTableViewCell *cell = (TWCommentTableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
     
-    
-    //    float oldHeight = cell.commentsBlock.frame.size.height;
-    //    NSLog(@"old cell height: %f",oldHeight);
-    
-    
     NSDictionary* cDic = comments[indexPath.row];
     
     NSString* commentStr = [TWUtility commentFromCommentNSDict: cDic];
     [cell.commentLabel setText:commentStr];
-    
     
     CGFloat fixedWidth = cell.commentLabel.frame.size.width;
     CGSize newSize = [cell.commentLabel sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
     CGRect newFrame = cell.commentLabel.frame;
     newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
     
-    
     float newHeight = newFrame.size.height;
     
     return newHeight + MARGIN;
     
 }
-
 
 @end
