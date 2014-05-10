@@ -32,6 +32,9 @@ BOOL isContentYNeg = NO;
 float totalCellYPast = 0;
 NSInteger numOfCommentsToShow = 5;
 
+//BOOL wentToComment = false;
+//CGFloat myC
+
 NSMutableDictionary* commentsFrameDict;
 
 @interface TWFeedTabViewController()
@@ -78,7 +81,7 @@ NSMutableDictionary* commentsFrameDict;
     
     NSString *imgTemp3 = @"http://www.themartellexperience.com/wp-content/uploads/2010/08/Restaurant-for-Romantic-Date-in-Moncton-New-Brunswick-Canada.jpg";
     
-    for (NSInteger i = 0; i < 10; i++) {
+    for (NSInteger i = 0; i < 30; i++) {
         TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
         
         // TODO Assign each thing to the proper thing
@@ -112,15 +115,23 @@ NSMutableDictionary* commentsFrameDict;
         NSDictionary *dictionary6 = [NSDictionary dictionaryWithObjects:objects6
                                                                 forKeys:keys];
         
-        NSArray *objects7 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too! Awesome Awesome Awesome Awesome",@"\n", nil];
-        NSDictionary *dictionary7 = [NSDictionary dictionaryWithObjects:objects7
+        NSDictionary *dictionary7 = [NSDictionary dictionaryWithObjects:objects6
+                                                                forKeys:keys];
+        
+        NSDictionary *dictionary8 = [NSDictionary dictionaryWithObjects:objects6
+                                                                forKeys:keys];
+        
+        NSDictionary *dictionary9 = [NSDictionary dictionaryWithObjects:objects6
+                                                                forKeys:keys];
+        
+        NSDictionary *dictionary10 = [NSDictionary dictionaryWithObjects:objects
                                                                 forKeys:keys];
         
         if( i == 2 || i == 3 ){
             itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, nil];
         }
         else{
-            itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, dictionary3, dictionary4, dictionary5, dictionary6, dictionary7, nil];
+            itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, dictionary3, dictionary4, dictionary5, dictionary6, dictionary7,dictionary8,dictionary9,dictionary10, nil];
         }
         itemModel.locations = [NSMutableArray arrayWithObjects:@"Brooklyn", @"NY", nil];
         itemModel.likes = [NSMutableArray arrayWithObjects:@"a",@"b",@"c",@"d", nil];
@@ -220,17 +231,20 @@ NSMutableDictionary* commentsFrameDict;
 
 -(void) addDataToCellDict:(NSInteger) index withHeight:(CGFloat)height{
     TWCellFrameData* data = [commentsFrameDict objectForKey:[NSString stringWithFormat:@"%li", index]];
+    
+    CGFloat total = height;
+    if (index > 0 ){
+        TWCellFrameData* aData = [commentsFrameDict objectForKey:[NSString stringWithFormat:@"%li", index-1]];
+        if( aData ){
+            total += aData.total;
+        }
+    }
+    
     if( data ){//existed
         data.height = height;
+        data.total = total;
     }
     else{//doesnt exist
-        CGFloat total = height;
-        if (index > 0 ){
-            TWCellFrameData* aData = [commentsFrameDict objectForKey:[NSString stringWithFormat:@"%li", index-1]];
-            if( aData ){
-                total += aData.total;
-            }
-        }
         data = [[TWCellFrameData alloc] initWithHeight: height withPrevious:total];
         [commentsFrameDict setObject:data forKey:[NSString stringWithFormat:@"%li", index]];
     }
@@ -239,6 +253,7 @@ NSMutableDictionary* commentsFrameDict;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Index: %li",(long)indexPath.row);
     if (indexPath.row % 2  == 0) {//top
         [self addDataToCellDict: indexPath.row withHeight:TOP_CELL_HEIGHT];
         return TOP_CELL_HEIGHT;
@@ -284,6 +299,7 @@ NSMutableDictionary* commentsFrameDict;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Row Index: %li",(long)indexPath.row);
     if( self.feedDates.count < 1 ){//empty?
         return [tableView dequeueReusableCellWithIdentifier:@"TopCell"];
     }
@@ -378,29 +394,6 @@ NSMutableDictionary* commentsFrameDict;
     return true;
 }
 
--(void) setTopCell{
-    NSIndexPath *firstCell = [[self.tableView indexPathsForVisibleRows] objectAtIndex:0];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:firstCell];
-    if([cell isKindOfClass:[TWFeedTopCell class]]){
-        [topCell removeFromSuperview];
-        
-        TWFeedTopCell* feedCell = (TWFeedTopCell*) cell;
-        
-        
-        topCell.userProfileImage.image = feedCell.userProfileImage.image;
-        topCell.userProfileImage.layer.cornerRadius = 24.0;
-        topCell.userProfileImage.clipsToBounds = YES;
-        
-        [topCell.username setText:feedCell.username.text];
-        topCell.timePosted.text = feedCell.timePosted.text;
-        topCell.index = feedCell.index;
-        
-        
-        [[self.view superview] insertSubview:topCell aboveSubview:self.tableView];
-//        topCell.frame = CGRectMake(0,0,topCell.frame.size.width,topCell.frame.size.height);
-    }
-}
-
 -(void) updateTopCell: (UIScrollView *)scrollView{
     if( self.feedDates.count < 1 ){
         return;
@@ -464,25 +457,25 @@ NSMutableDictionary* commentsFrameDict;
         totalNow = aData.total;
     }
     
-    NSLog(@"-------------");
-    NSLog(@"table index: %li", firstVisibleIndexPath.row);
-    NSLog(@"index: %li", index);
-    NSLog(@"scrollview y: %f", scrollView.contentOffset.y);
-    NSLog(@"cell y: %f", other.frame.origin.y);
-    NSLog(@"diff: %f", scrollView.contentOffset.y - other.frame.origin.y);
-    NSLog(@"total y: %f", totalNow);
-    NSLog(@"diff-total: %f", (totalNow - (int)scrollView.contentOffset.y));
-    
-    
+//    
+//    NSLog(@"-------------");
+//    NSLog(@"table index: %li", firstVisibleIndexPath.row);
+//    NSLog(@"index: %li", index);
+//    NSLog(@"scrollview y: %f", scrollView.contentOffset.y);
+//    NSLog(@"cell y: %f", other.frame.origin.y);
+//    NSLog(@"diff: %f", scrollView.contentOffset.y - other.frame.origin.y);
+//    NSLog(@"total y: %f", totalNow);
+//    NSLog(@"diff-total: %f", (totalNow - (int)scrollView.contentOffset.y));
+//    
+//    
 
     if( ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
        && ((totalNow - (int)scrollView.contentOffset.y) >= 1)
        && firstVisibleIndexPath.row % 2 == 1){//touching other cell, moving other cell
         int pos = totalNow - (int)scrollView.contentOffset.y - TOP_CELL_HEIGHT;
-        NSLog(@"top cell: %i", TOP_CELL_HEIGHT);
-        NSLog(@"POS y: %i", pos);
+//        NSLog(@"top cell: %i", TOP_CELL_HEIGHT);
+//        NSLog(@"POS y: %i", pos);
         topCell.frame = CGRectMake(0,pos,topCell.frame.size.width,topCell.frame.size.height);
-        
         [self updateTopCell:scrollView];
     }
     else{
@@ -492,7 +485,7 @@ NSMutableDictionary* commentsFrameDict;
     }
     
     
-    NSLog(@"-------------");
+//    NSLog(@"-------------");
     
 //    if( ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) < (BOTTOM_CELL_HEIGHT + TOP_CELL_HEIGHT) && ((int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT)) >=  BOTTOM_CELL_HEIGHT){//touching other cell, moving other cell
 //        int pos = (BOTTOM_CELL_HEIGHT) - (int)scrollView.contentOffset.y % (TOP_CELL_HEIGHT + BOTTOM_CELL_HEIGHT);

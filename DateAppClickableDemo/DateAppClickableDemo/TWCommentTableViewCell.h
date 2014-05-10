@@ -12,4 +12,6 @@
 
 @property (strong, nonatomic) IBOutlet UITextView *commentLabel;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
+
 @end

@@ -22,6 +22,7 @@
 @implementation TWCommentViewController
 @synthesize comments,toolbar,commentField,tableview;
 
+int MARGIN = 20;
 CGRect keyboardFrame;
 CGRect tvFrameBefore;//keyboard
 CGRect tvFrameAfter;//keyboard
@@ -45,11 +46,7 @@ CGRect tvFrameAfter;//keyboard
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    
-    if( comments.count > 0 ){
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
-        [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-    }
+    [self scrollTable];
 }
 
 - (void)viewDidLoad
@@ -58,6 +55,9 @@ CGRect tvFrameAfter;//keyboard
     // Do any additional setup after loading the view.
     
     tvFrameBefore = tableview.frame;
+    CGRect tvFrameTemp = tableview.frame;
+    tvFrameTemp.size.height -= 65;//weird
+    tableview.frame = tvFrameTemp;
     tvFrameAfter = tableview.frame;
 
     //keyboard
@@ -94,15 +94,28 @@ CGRect tvFrameAfter;//keyboard
 - (void)keyboardDidShow: (NSNotification *) notif{
     // Do something here
     tableview.frame = tvFrameAfter;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
-    [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    
+    [self scrollTable];
 }
 
 - (void)keyboardDidHide: (NSNotification *) notif{
     // Do something here
+    [self scrollTable];
     tableview.frame = tvFrameBefore;
+    
+    [self scrollTable];
 }
 
+-(void) scrollTable{
+    if( comments.count > 0 ){
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
+        [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
+//
+//    CGFloat height = self.tableview.contentSize.height - self.tableview.bounds.size.height;
+//    [self.tableview setContentOffset:CGPointMake(0, height) animated:YES];
+//    
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -128,8 +141,7 @@ CGRect tvFrameAfter;//keyboard
     
     [tableview reloadData];
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
-    [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    [self scrollTable];
 
     
 
@@ -163,8 +175,7 @@ CGRect tvFrameAfter;//keyboard
         toolbar.frame = toolBarFrame;
         
         tableview.frame = tvFrameAfter;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[comments count]-1 inSection:0];
-        [tableview scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        [self scrollTable];
 
     }
 }
@@ -194,7 +205,44 @@ CGRect tvFrameAfter;//keyboard
     NSString* commentStr = [TWUtility commentFromCommentNSDict: cDic];
     [cell.commentLabel setText:commentStr];
     
+    CGFloat fixedWidth = cell.commentLabel.frame.size.width;
+    CGSize newSize = [cell.commentLabel sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    CGRect newFrame = cell.commentLabel.frame;
+    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    cell.commentLabel.frame = newFrame;
+    
+    cell.heightConstraint.constant = newFrame.size.height;
+    
     return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    TWCommentTableViewCell *cell = (TWCommentTableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
+    
+    
+    //    float oldHeight = cell.commentsBlock.frame.size.height;
+    //    NSLog(@"old cell height: %f",oldHeight);
+    
+    
+    NSDictionary* cDic = comments[indexPath.row];
+    
+    NSString* commentStr = [TWUtility commentFromCommentNSDict: cDic];
+    [cell.commentLabel setText:commentStr];
+    
+    
+    CGFloat fixedWidth = cell.commentLabel.frame.size.width;
+    CGSize newSize = [cell.commentLabel sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    CGRect newFrame = cell.commentLabel.frame;
+    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    
+    
+    float newHeight = newFrame.size.height;
+    
+    return newHeight + MARGIN;
+    
 }
 
 
