@@ -12,7 +12,34 @@ extern NSString *const kTWPDateClassKey;
 
 // Field Keys
 extern NSString *const kTWPDateUserKey;
+extern NSString *const kTWPDateCommentsKey;
+extern NSString *const kTWPDateImagesKey;
+extern NSString *const kTWPDateLikesKey;
+extern NSString *const kTWPDateLocationsKey;
+
+
+#pragma mark - PFObject UserLocation Class
+// Class Key
+extern NSString *const kTWPUserLocationClassKey;
+
+// Field Keys
+extern NSString *const kTWPUserLocationNameKey;
+extern NSString *const kTWPUserLocationGeoKey;
+extern NSString *const kTWPUserLocationFoursquareDataKey;
+
+
+#pragma mark - PFObject UserPhoto Class
+// Class Key
+extern NSString *const kTWPUserPhotoClassKey;
+
+// Field Keys
+extern NSString *const kTWPUserPhotoImageFileKey;
+extern NSString *const kTWPUserPhotoUserKey;
+
 
 #pragma mark - PFUser User Class
 // Field Keys
 extern NSString *const kTWPUserFollowingKey;
+extern NSString *const kTWPUserUsernameKey;
+extern NSString *const kTWPUserUserProfileImageKey;
+
