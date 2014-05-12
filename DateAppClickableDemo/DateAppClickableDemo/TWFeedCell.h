@@ -19,9 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *likeCount;
 @property (strong, nonatomic) IBOutlet UILabel *locationsBlock;
 
-@property (nonatomic) NSInteger index;
 
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 
 

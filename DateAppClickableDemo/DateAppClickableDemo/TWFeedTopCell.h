@@ -15,6 +15,4 @@
 @property (strong, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UIImageView *userProfileImage;
 
-@property (nonatomic) NSInteger index;
-
 @end

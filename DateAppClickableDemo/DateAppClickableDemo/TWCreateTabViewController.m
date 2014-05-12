@@ -91,18 +91,12 @@
 }
 
 
-<<<<<<< HEAD
 -(void) applyFilter:(id) sender
 {
     selectedFilterView.layer.shadowRadius = 0.0f;
     selectedFilterView.layer.shadowOpacity = 0.0f;
     
     selectedFilterView = [(UITapGestureRecognizer *) sender view];
-=======
-- (IBAction)addPicture:(UIButton *)sender {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
->>>>>>> FETCH_HEAD
     
     selectedFilterView.layer.shadowColor = [UIColor yellowColor].CGColor;
     selectedFilterView.layer.shadowRadius = 3.0f;
@@ -113,7 +107,6 @@
     int filterIndex = selectedFilterView.tag;
     Filter *filter = [filters objectAtIndex:filterIndex];
     
-<<<<<<< HEAD
     CIImage *outputImage = [filter.filter outputImage];
     
     CGImageRef cgimg =
@@ -215,31 +208,6 @@
     
     
     [self createPreviewViewsForFilters];
-=======
-    [[UINib nibWithNibName:@"overlay" bundle:nil] instantiateWithOwner:self options:nil];
-    
-    picker.cameraOverlayView = self.cameraOverlay;
-    
-    [self presentViewController:picker animated:YES completion:NULL];
-    
-    // enable imageview
-    _imageView.hidden = NO;
-    // disable add pic button
-    _addPic.hidden = YES;
-}
-
-- (IBAction)submit:(UIButton *)sender {
-    // on submission, save image
-    UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-}
-
-- (IBAction)retakePic:(UIButton *)sender {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    [self presentViewController:picker animated:YES completion:NULL];
->>>>>>> FETCH_HEAD
 }
 /*
 (void) takePicture:(id) sender
@@ -265,7 +233,6 @@
     //finalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     finalImage = [info objectForKey:UIImagePickerControllerEditedImage];
     
-<<<<<<< HEAD
     [self.imageView setImage:finalImage];
     
     // UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
@@ -273,17 +240,10 @@
     [self dismissModalViewControllerAnimated:YES];
     
     // load the filters again
-=======
-    //cropped picture
-    originalImage = [info valueForKey:UIImagePickerControllerEditedImage];
-    [self.imageView setImage:originalImage];
-    [picker dismissModalViewControllerAnimated:YES];
->>>>>>> FETCH_HEAD
     
     [self loadFiltersForImage:finalImage];
 }
 
-<<<<<<< HEAD
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -300,24 +260,9 @@
 {
     [super viewDidAppear:animated];
 }
-=======
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-    
-    //disable imageview
-    _imageView.hidden = YES;
-    //enable add pic button
-    _addPic.hidden = NO;
-
-}
-
-#pragma mark Camera Overlay Actions
->>>>>>> FETCH_HEAD
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-<<<<<<< HEAD
 	[super viewWillDisappear:animated];
 }
 
@@ -395,30 +340,6 @@
     
 }
 
-=======
-    // dismiss the camera but not if it's still taking timed pictures
-    if (![self.cameraTimer isValid])
-        [self finishAndUpdate];
-}
-
-- (IBAction)takePhoto:(id)sender
-{
-    // this will take a timed photo, to be taken 5 seconds from now
-    [self.imagePickerController takePicture];
-}
-
-- (void)finishAndUpdate
-{
-    
-    // restore the state of our overlay toolbar buttons
-    self.cancelButton.enabled = YES;
-    self.takePictureButton.enabled = YES;
-    self.timedButton.enabled = YES;
-    self.startStopButton.enabled = YES;
-    self.startStopButton.title = @"Start";
-}
-
->>>>>>> FETCH_HEAD
 @end
 
 

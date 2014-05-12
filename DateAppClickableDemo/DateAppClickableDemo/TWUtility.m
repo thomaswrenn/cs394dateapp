@@ -15,7 +15,7 @@
     commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"user"]];
     commentString = [commentString stringByAppendingString: @": "];
     commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"text"]];
-//    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"\n"]];
+    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"\n"]];
     
     
     return commentString;
@@ -25,27 +25,6 @@
     NSString *locationString = @"";
     locationString = jsonItem;
     return locationString;
-}
-
-+ (NSString *)commentsBlockFromNSArray:(NSMutableArray *)nsarray withAmount:(NSInteger) size{
-    NSMutableString *commentsBlockString = [[NSMutableString alloc] init];
-    NSInteger start = 0;
-    if( nsarray.count > 5 ){
-        start = nsarray.count - size;
-    }
-    for (NSInteger i = start; i < nsarray.count; i++) {
-        NSDictionary *comment = nsarray[i];
-        [commentsBlockString appendString: [[self class] commentFromCommentNSDict:comment]];
-        if( (i+1) != nsarray.count ){
-            [commentsBlockString appendString: @"\n"];
-        }
-    }
-    if( nsarray.count > 5 ){
-        [commentsBlockString appendString: @"\n"];
-        [commentsBlockString appendString: @"Show more..."];
-//        [commentsBlockString appendString: @"\n"];
-    }
-    return commentsBlockString;
 }
 
 + (NSString *)commentsBlockFromNSArray:(NSMutableArray *)nsarray {
