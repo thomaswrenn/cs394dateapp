@@ -16,6 +16,7 @@ extern NSString *const kTWPDateCommentsKey;
 extern NSString *const kTWPDateImagesKey;
 extern NSString *const kTWPDateLikesKey;
 extern NSString *const kTWPDateLocationsKey;
+extern NSString *const kTWPDateTimePostedKey;
 
 
 #pragma mark - PFObject UserLocation Class
