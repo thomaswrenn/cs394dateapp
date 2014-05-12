@@ -79,8 +79,6 @@ enum
 
 
 - (IBAction)addPicture:(UIButton *)sender {
-    
-    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
@@ -90,35 +88,20 @@ enum
     picker.showsCameraControls = NO;
     //picker.navigationBarHidden = YES;
     
-    //picker.cameraOverlayView = [[UIView alloc ]initWithNibName:@"overlay" bundle:nil];
-    
     [[UINib nibWithNibName:@"overlay" bundle:nil] instantiateWithOwner:self options:nil];
     
-    /*
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button addTarget:self
-               action:@selector(aMethod:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"Show View" forState:UIControlStateNormal];
-    button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
-    [picker.cameraOverlayView addSubview:button];
-     */
-    
     picker.cameraOverlayView = self.cameraOverlay;
-    //[picker.cameraOverlayView addConstraint:[NSLayoutConstraint constraintsWithVisualFormat:@"|-50-[cameraOverlay]-50-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self)]];
     
     [self presentViewController:picker animated:YES completion:NULL];
-
     
-    //enable imageview
+    // enable imageview
     _imageView.hidden = NO;
-    //disable add pic button
+    // disable add pic button
     _addPic.hidden = YES;
-    
 }
 
 - (IBAction)submit:(UIButton *)sender {
-    //on submission, save image
+    // on submission, save image
     UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
@@ -127,10 +110,7 @@ enum
     picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
     [self presentViewController:picker animated:YES completion:NULL];
-    
-    
 }
 
 - (IBAction)locationToggle:(UISegmentedControl *)sender {
@@ -194,13 +174,6 @@ enum
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-    //UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    //self.imageView.image = chosenImage;
-    
-    //[picker dismissViewControllerAnimated:YES completion:NULL];
-    
-    //originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
     //cropped picture
     originalImage = [info valueForKey:UIImagePickerControllerEditedImage];
     [self.imageView setImage:originalImage];
@@ -216,40 +189,26 @@ enum
     _imageView.hidden = YES;
     //enable add pic button
     _addPic.hidden = NO;
-    
-    
+
 }
 
-//
-//
-//overlay camera actions
-//
-//
-
-#pragma mark Camera Actions
+#pragma mark Camera Overlay Actions
 
 - (IBAction)done:(id)sender
 {
-    // dismiss the camera
-    //
-    // but not if it's still taking timed pictures
+    // dismiss the camera but not if it's still taking timed pictures
     if (![self.cameraTimer isValid])
         [self finishAndUpdate];
 }
 
-// this will take a timed photo, to be taken 5 seconds from now
-//
-
 - (IBAction)takePhoto:(id)sender
 {
+    // this will take a timed photo, to be taken 5 seconds from now
     [self.imagePickerController takePicture];
 }
 
-
-
 - (void)finishAndUpdate
 {
-    //[self.imagePickerController didFinishWithCamera];  // tell our delegate we are done with the camera
     
     // restore the state of our overlay toolbar buttons
     self.cancelButton.enabled = YES;
@@ -258,9 +217,6 @@ enum
     self.startStopButton.enabled = YES;
     self.startStopButton.title = @"Start";
 }
-
-// this get called when an image has been chosen from the library or taken from the camera
-//
 
 @end
 
