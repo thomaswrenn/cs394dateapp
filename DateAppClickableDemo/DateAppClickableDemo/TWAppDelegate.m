@@ -13,6 +13,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+
     // Override point for customization after application launch.
     [Parse setApplicationId:@"OoHIkXP4veqn7ch2kLv5UojFwQzyFC37QJDBaoir"
                   clientKey:@"ZdZ8sonuTHkAYzKWwQSu2EFBH1ThPNgl1PklDd5C"];

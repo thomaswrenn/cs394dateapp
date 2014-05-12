@@ -12,6 +12,9 @@
 		224A3AB218F5CFDC00166EF7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224A3AB118F5CFDC00166EF7 /* OpenGLES.framework */; };
 		224A3AB418F5CFE500166EF7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224A3AB318F5CFE500166EF7 /* AVFoundation.framework */; };
 		2262251C191814AB0019E9F2 /* overlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2262251B191814AB0019E9F2 /* overlay.xib */; };
+		22A8E38A1920509400F652C0 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 22A8E3871920509300F652C0 /* Filter.m */; };
+		22A8E38B1920509400F652C0 /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 22A8E3891920509400F652C0 /* UIImage+Extensions.m */; };
+		22A8E38D19205CC500F652C0 /* logo2.png in Resources */ = {isa = PBXBuildFile; fileRef = 22A8E38C19205CC500F652C0 /* logo2.png */; };
 		22DC092C18FCC40800A0E217 /* big add.png in Resources */ = {isa = PBXBuildFile; fileRef = 22DC092B18FCC40800A0E217 /* big add.png */; };
 		3CB7BAB91914676800DDBD5C /* TWFeedTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7BAB81914676800DDBD5C /* TWFeedTopCell.m */; };
 		4C3471B318F1C5B400EF0FE8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3471B218F1C5B400EF0FE8 /* MapKit.framework */; };
@@ -68,6 +71,11 @@
 		224A3AB118F5CFDC00166EF7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		224A3AB318F5CFE500166EF7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2262251B191814AB0019E9F2 /* overlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = overlay.xib; sourceTree = "<group>"; };
+		22A8E3861920509300F652C0 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		22A8E3871920509300F652C0 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
+		22A8E3881920509400F652C0 /* UIImage+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
+		22A8E3891920509400F652C0 /* UIImage+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extensions.m"; sourceTree = "<group>"; };
+		22A8E38C19205CC500F652C0 /* logo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo2.png; sourceTree = "<group>"; };
 		22DC092B18FCC40800A0E217 /* big add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "big add.png"; sourceTree = "<group>"; };
 		3CB7BAB71914676800DDBD5C /* TWFeedTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFeedTopCell.h; sourceTree = "<group>"; };
 		3CB7BAB81914676800DDBD5C /* TWFeedTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFeedTopCell.m; sourceTree = "<group>"; };
@@ -167,6 +175,10 @@
 		7543996318E24EF500C667BD = {
 			isa = PBXGroup;
 			children = (
+				22A8E3861920509300F652C0 /* Filter.h */,
+				22A8E3871920509300F652C0 /* Filter.m */,
+				22A8E3881920509400F652C0 /* UIImage+Extensions.h */,
+				22A8E3891920509400F652C0 /* UIImage+Extensions.m */,
 				7543997518E24EF500C667BD /* DateAppClickableDemo */,
 				7543999718E24EF500C667BD /* DateAppClickableDemoTests */,
 				7543996E18E24EF500C667BD /* Frameworks */,
@@ -239,6 +251,7 @@
 				2262251B191814AB0019E9F2 /* overlay.xib */,
 				7543998A18E24EF500C667BD /* Images.xcassets */,
 				22DC092B18FCC40800A0E217 /* big add.png */,
+				22A8E38C19205CC500F652C0 /* logo2.png */,
 				7543997618E24EF500C667BD /* Supporting Files */,
 				75F610F5190F50FA007B7F8E /* TWFeedDataSource.h */,
 				75F610F6190F50FA007B7F8E /* TWFeedDataSource.m */,
@@ -390,6 +403,7 @@
 				2262251C191814AB0019E9F2 /* overlay.xib in Resources */,
 				7543998B18E24EF500C667BD /* Images.xcassets in Resources */,
 				22DC092C18FCC40800A0E217 /* big add.png in Resources */,
+				22A8E38D19205CC500F652C0 /* logo2.png in Resources */,
 				7543997A18E24EF500C667BD /* InfoPlist.strings in Resources */,
 				75F610E2190F0FD1007B7F8E /* generate_constants.py in Resources */,
 				7543998318E24EF500C667BD /* Main.storyboard in Resources */,
@@ -505,6 +519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				753668F918EA27EF005ACE73 /* TWFeedCell.m in Sources */,
+				22A8E38A1920509400F652C0 /* Filter.m in Sources */,
 				753668F318EA2538005ACE73 /* TWCreateTabViewController.m in Sources */,
 				752F477418EB5FF200EC038B /* TWUtility.m in Sources */,
 				7543998618E24EF500C667BD /* TWFeedTabViewController.m in Sources */,
@@ -516,6 +531,7 @@
 				7543997C18E24EF500C667BD /* main.m in Sources */,
 				7543998018E24EF500C667BD /* TWAppDelegate.m in Sources */,
 				75F610F7190F50FA007B7F8E /* TWFeedDataSource.m in Sources */,
+				22A8E38B1920509400F652C0 /* UIImage+Extensions.m in Sources */,
 				3CB7BAB91914676800DDBD5C /* TWFeedTopCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
