@@ -14,6 +14,8 @@
 
 + (NSString *)commentsBlockFromNSArray:(NSMutableArray *)nsarray;
 
++ (NSString *)commentsBlockFromNSArray:(NSMutableArray *)nsarray withAmount:(NSInteger) size;
+
 + (NSString *)locationsFromNSArray:(NSMutableArray *)nsarray;
 
 + (void)getDatesWithCallback:(void (^)(NSArray *dates, NSError *error))completionBlock;
