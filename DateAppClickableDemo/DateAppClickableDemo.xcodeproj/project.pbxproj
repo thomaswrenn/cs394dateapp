@@ -40,6 +40,7 @@
 		7543999418E24EF500C667BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7543997318E24EF500C667BD /* UIKit.framework */; };
 		7543999C18E24EF500C667BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7543999A18E24EF500C667BD /* InfoPlist.strings */; };
 		7543999E18E24EF500C667BD /* DateAppClickableDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7543999D18E24EF500C667BD /* DateAppClickableDemoTests.m */; };
+		7560BBDF19207CF700D7CE8B /* TWConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7560BBDE19207CF700D7CE8B /* TWConstants.m */; };
 		75D519DE18EB943300A15C92 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F477D18EB872C00EC038B /* CFNetwork.framework */; };
 		75D519DF18EB944000A15C92 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7543997118E24EF500C667BD /* CoreGraphics.framework */; };
 		75D519E018EB945000A15C92 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F477F18EB873E00EC038B /* CoreLocation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -120,6 +121,8 @@
 		7543999918E24EF500C667BD /* DateAppClickableDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DateAppClickableDemoTests-Info.plist"; sourceTree = "<group>"; };
 		7543999B18E24EF500C667BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7543999D18E24EF500C667BD /* DateAppClickableDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateAppClickableDemoTests.m; sourceTree = "<group>"; };
+		7560BBDD19207CF700D7CE8B /* TWConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWConstants.h; sourceTree = "<group>"; };
+		7560BBDE19207CF700D7CE8B /* TWConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWConstants.m; sourceTree = "<group>"; };
 		75D519E618EB950700A15C92 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		75F610E1190F0FD1007B7F8E /* generate_constants.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = generate_constants.py; sourceTree = "<group>"; };
 		75F610EF190F1585007B7F8E /* NSDate+JBWBuilders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+JBWBuilders.h"; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 				7543997618E24EF500C667BD /* Supporting Files */,
 				75F610F5190F50FA007B7F8E /* TWFeedDataSource.h */,
 				75F610F6190F50FA007B7F8E /* TWFeedDataSource.m */,
+				7560BBDD19207CF700D7CE8B /* TWConstants.h */,
+				7560BBDE19207CF700D7CE8B /* TWConstants.m */,
 			);
 			path = DateAppClickableDemo;
 			sourceTree = "<group>";
@@ -525,6 +530,7 @@
 				7543998618E24EF500C667BD /* TWFeedTabViewController.m in Sources */,
 				7543998918E24EF500C667BD /* TWExploreTabViewController.m in Sources */,
 				753668F618EA254C005ACE73 /* TWProfileTabViewController.m in Sources */,
+				7560BBDF19207CF700D7CE8B /* TWConstants.m in Sources */,
 				75F610F4190F1585007B7F8E /* NSURL+JBWBuilders.m in Sources */,
 				753668FE18EA3A7B005ACE73 /* TWFeedItemModel.m in Sources */,
 				75F610F3190F1585007B7F8E /* NSDate+JBWBuilders.m in Sources */,

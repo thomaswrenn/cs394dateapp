@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Thomas Wrenn. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface TWFeedItemModel : NSObject
 
 @property (strong, nonatomic) NSMutableArray *imageURLs; //???: What was the future roadmap for this that I put a TODO on it reading "For Now"?
@@ -18,5 +16,7 @@
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) NSMutableArray *locations;
 @property (strong, nonatomic) NSMutableArray *likes;
+
++ (TWFeedItemModel*)feedItemModelFromPFObject:(PFObject *)datePFObject;
 
 @end

@@ -17,10 +17,16 @@
         // initialize instance variables here
          _userProfileImageURL = [[NSMutableString alloc] init];
         _username = [[NSMutableString alloc] init];
-        
     }
     
     return self;
+}
+
++ (TWFeedItemModel*)feedItemModelFromPFObject:(PFObject *)datePFObject {
+    self = [super init];
+    if (self) {
+        _username = [datePFObject val]
+    }
 }
 
 @end
