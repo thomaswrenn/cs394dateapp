@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #define TOP_CELL_HEIGHT 68
-#define BOTTOM_CELL_HEIGHT 341
+#define BOTTOM_CELL_HEIGHT 335
+#define OLD_CELL_TEXTVIEW_HEIGHT 83
 
 @interface TWFeedTabViewController : UITableViewController
 
 //@property(nonatomic, weak) IBOutlet UICollectionView *feedCollectionView;
 
 @property (strong, nonatomic) NSMutableArray *feedDates;
+
 
 
 //- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
