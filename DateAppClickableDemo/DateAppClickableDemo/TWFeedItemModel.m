@@ -1,5 +1,5 @@
 //
-//  TWFeedItem.m
+//  TWFeedItemModel.m
 //  DateAppClickableDemo
 //
 //  Created by Thomas Wrenn on 3/31/14.
@@ -15,18 +15,26 @@
     
     if (self) {
         // initialize instance variables here
-         _userProfileImageURL = [[NSMutableString alloc] init];
+         _userProfileImage = [[NSMutableString alloc] init];
         _username = [[NSMutableString alloc] init];
     }
     
     return self;
 }
 
-+ (TWFeedItemModel*)feedItemModelFromPFObject:(PFObject *)datePFObject {
+- (TWFeedItemModel*)initFromPFObject:(PFObject *)datePFObject {
     self = [super init];
     if (self) {
-        _username = [datePFObject val]
+        PFUser* userPFObject = [datePFObject valueForKey:kTWPDateUserKey];
+        _username         = [userPFObject valueForKey:kTWPUserUsernameKey];
+        _timePosted       = [datePFObject valueForKey:kTWPDateTimePostedKey];
+        _userProfileImage = [userPFObject valueForKey:kTWPUserUserProfileImageKey];
+        _images           = [datePFObject valueForKey:kTWPDateImagesKey];
+        _locations        = [datePFObject valueForKey:kTWPDateLocationsKey];
+        _likes            = [datePFObject valueForKey:kTWPDateLikesKey];
+        _comments         = [datePFObject valueForKey:kTWPDateCommentsKey];
     }
+    return self;
 }
 
 @end
