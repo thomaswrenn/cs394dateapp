@@ -334,11 +334,16 @@
             
             PFUser *user = [PFUser currentUser];
             [userPhoto setObject:user forKey:@"user"];
+            [newDate setObject:[PFUser currentUser] forKey:kTWPDateUserKey];
+            PFObject* newLocation = [PFObject objectWithClassName:kTWPUserLocationClassKey];
+            [newLocation setObject:self.locations.text forKey:kTWPUserLocationNameKey];
+            [newDate setObject:@[newLocation] forKey:kTWPDateLocationsKey];
+            [newDate setObject:[[NSMutableArray alloc] initWithCapacity:(NSInteger)(rand()*10)] forKey:kTWPDateLikesKey];
+            [newDate setObject:[NSDate date] forKey:kTWPDateTimePostedKey];
             
             [userPhoto saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
                     [newDate setObject:@[userPhoto] forKey:kTWPDateImagesKey];
-                    [newDate setObject:[PFUser currentUser] forKey:kTWPDateUserKey];
                     [newDate saveInBackgroundWithBlock:^(BOOL succeeded, NSError* error) {
                         if (!error) {
                         } else {
@@ -351,6 +356,7 @@
                     NSLog(@"Error: %@ %@", error, [error userInfo]);
                 }
             }];
+            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:0];
         }
         else{
             // Log details of the failure

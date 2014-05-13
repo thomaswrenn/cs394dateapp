@@ -493,12 +493,12 @@ CGRect mapViewFrame;
 //    NSLog(@"scroll y: %f",scrollView.contentOffset.y);
 //
 //    if( scrollView.contentOffset.y <= 0 ){
-//        NSLog(@"asdad1");
 //        [profileImage setHidden:NO];
 //        [profileLocation setHidden:NO];
 //        [profileName setHidden:NO];
 //        [segmentedControl setHidden:NO];
-//        
+//    }
+//
 //        
 //        CGRect newFrame = segmentedControl.frame;
 //        newFrame.origin.y = segmentedControlFrame.origin.y;

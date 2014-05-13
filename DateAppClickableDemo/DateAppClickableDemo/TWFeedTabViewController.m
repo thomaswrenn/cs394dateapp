@@ -43,12 +43,14 @@ NSMutableDictionary* commentsFrameDict;
 
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    /*self.feedDates = [[NSMutableArray alloc] init];
+    
     NSMutableArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
     [following addObject:[PFUser currentUser]];
     [TWUtility getDatesFromUsers:following withCallback:^(NSArray *dates, NSError *error) {
         if (!error) {
             NSLog(@"Fetched dates without error");
+            self.feedDates = [[NSMutableArray alloc] init];
+            headerCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
             for (PFObject *date in dates) {
                 TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
                 [self.feedDates addObject: feedItem];
@@ -57,8 +59,8 @@ NSMutableDictionary* commentsFrameDict;
             NSLog(@"Date Fetch Unsuccessful");
         }
         [self.tableView reloadData];
-    }];*/
-    [self.tableView reloadData];
+    }];
+//    [self.tableView reloadData];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -82,10 +84,11 @@ NSMutableDictionary* commentsFrameDict;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.feedDates = [[NSMutableArray alloc] init];
     
     commentsFrameDict = [[NSMutableDictionary alloc] init];
-    
+    /*
+    self.feedDates = [[NSMutableArray alloc] init];
+     
     headerCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
     
     NSMutableArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
@@ -102,6 +105,7 @@ NSMutableDictionary* commentsFrameDict;
         }
         [self.tableView reloadData];
     }];
+     */
 }
 
 - (BOOL)prefersStatusBarHidden {
