@@ -134,7 +134,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="315"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2yr-XN-Gpa" customClass="AMAttributedHighlightLabel">
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2yr-XN-Gpa" customClass="AMAttributedHighlightLabel">
                                             <rect key="frame" x="103" y="306" width="0.0" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -156,11 +156,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="2yr-XN-Gpa" secondAttribute="bottom" constant="10" id="Y21-cZ-3ET"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="comments" destination="2yr-XN-Gpa" id="gMY-bo-bFQ"/>
                                     <outlet property="likeCount" destination="NRK-Qa-vUC" id="JFR-9Y-ClN"/>
                                     <outlet property="locationsBlock" destination="QF1-6r-1CV" id="eNv-HL-fn7"/>
                                     <outlet property="topImage" destination="O3q-NC-iVf" id="lK2-Eg-mkL"/>

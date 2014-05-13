@@ -3,11 +3,11 @@ Parse.Cloud.beforeSave('date', function(request, response) {
   var currentUser = request.user;
   var objectUser = request.object.get('user');
 
-  if(!currentUser || !objectUser) {
+/*  if(!currentUser || !objectUser) {
     response.error('A Date should have a valid user.');
-  } else if (currentUser.id === objectUser.id) {
+  } else if (currentUser.id === objectUser.id) { */
     response.success();
-  } else {
+/*  } else {
     response.error('Cannot set user on Photo to a user other than the current user.');
-  }
+  }*/
 });

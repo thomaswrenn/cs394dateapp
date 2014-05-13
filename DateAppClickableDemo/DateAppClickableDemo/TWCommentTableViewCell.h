@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Thomas Wrenn. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <AMAttributedHighlightLabel/AMAttributedHighlightLabel.h>
 
 @interface TWCommentTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UITextView *commentLabel;
+@property (strong, nonatomic) IBOutlet AMAttributedHighlightLabel *commentLabel;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 

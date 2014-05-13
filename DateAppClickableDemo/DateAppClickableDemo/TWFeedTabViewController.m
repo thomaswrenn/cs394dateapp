@@ -26,6 +26,16 @@ NSMutableDictionary* commentsFrameDict;
 @implementation TWFeedTabViewController
 @synthesize headerCell;
 
+# pragma mark - AMAttributedHighlightLabelDelegate
+-(void)selectedMention:(NSString *)string {
+    NSLog(@"mention: %@", string);
+}
+-(void)selectedHashtag:(NSString *)string {
+    NSLog(@"hashtag: %@", string);
+}
+-(void)selectedLink:(NSString *)string {
+    NSLog(@"link: %@", string);
+}
 
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -69,8 +79,8 @@ NSMutableDictionary* commentsFrameDict;
         if (!error) {
             NSLog(@"Fetched dates without error");
             for (PFObject *date in dates) {
-                TWFeedItemModel *feedItem = [TWFeedItemModel feedItemModelFromPFObject:date];
-                
+                TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
+                [self.feedDates addObject: feedItem];
             }
             [self.tableView reloadData];
         } else {
@@ -166,9 +176,9 @@ NSMutableDictionary* commentsFrameDict;
         
         // TODO Assign each thing to the proper thing
         itemModel.username = [json objectForKey:@"username"];
-        itemModel.userProfileImageURL = [json objectForKey:@"userProfileImageURL"];
+        itemModel.userProfileImage = [json objectForKey:@"userProfileImageURL"];
         itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[json objectForKey:@"timePosted"] doubleValue]];
-        itemModel.imageURLs = [json objectForKey:@"images"];
+        itemModel.images = [json objectForKey:@"images"];
         itemModel.comments = [json objectForKey:@"comments"];
         itemModel.locations = [json objectForKey:@"locations"];
         itemModel.likes = [json objectForKey:@"likes"];
@@ -250,9 +260,23 @@ NSMutableDictionary* commentsFrameDict;
     
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: (indexPath.row/2)];
     
-    [cell.commentsBlock setText:[TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow]];
+    AMAttributedHighlightLabel* commentsLabel = cell.comments;
+    commentsLabel.delegate = self;
+    commentsLabel.userInteractionEnabled = YES;
+    commentsLabel.numberOfLines = 0;
+    commentsLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
-    float newHeight = [cell.commentsBlock sizeThatFits:CGSizeMake(cell.commentsBlock.frame.size.width, MAXFLOAT)].height;
+    [commentsLabel setString:[TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow]];
+    
+    commentsLabel.textColor = [UIColor lightGrayColor];
+    commentsLabel.mentionTextColor = [UIColor darkGrayColor];
+    commentsLabel.hashtagTextColor = [UIColor darkGrayColor];
+    commentsLabel.linkTextColor = [UIColor colorWithRed:129.0/255.0 green:171.0/255.0 blue:193.0/255.0 alpha:1.0];
+    commentsLabel.selectedMentionTextColor = [UIColor blackColor];
+    commentsLabel.selectedHashtagTextColor = [UIColor blackColor];
+    commentsLabel.selectedLinkTextColor = UIColorFromRGB(0x4099FF);
+    
+    float newHeight = [cell.comments sizeThatFits:CGSizeMake(commentsLabel.frame.size.width, MAXFLOAT)].height;
         
     CGFloat bottomHeight = BOTTOM_CELL_HEIGHT - OLD_CELL_TEXTVIEW_HEIGHT + newHeight;
     [self addDataToCellDict: indexPath.row withHeight:bottomHeight];
@@ -279,7 +303,7 @@ NSMutableDictionary* commentsFrameDict;
         
         headerCell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
 
-        [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+        [headerCell.userProfileImage setImage:itemModel.userProfileImage];
         
         headerCell.userProfileImage.layer.cornerRadius = 24.0;
         headerCell.userProfileImage.clipsToBounds = YES;
@@ -294,7 +318,7 @@ NSMutableDictionary* commentsFrameDict;
     if(indexPath.row % 2 == 0 ){//top one
         TWFeedTopCell *cell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
 
-        [cell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+        [cell.userProfileImage setImage:itemModel.userProfileImage];
         cell.userProfileImage.layer.cornerRadius = 24.0;
         cell.userProfileImage.clipsToBounds = YES;
         
@@ -311,12 +335,14 @@ NSMutableDictionary* commentsFrameDict;
     else{//bottom
         TWFeedCell *cell = (TWFeedCell *)[tableView dequeueReusableCellWithIdentifier:@"BottomCell"];
 
-        [ cell.topImage setImageWithURL:[NSURL URLWithString:itemModel.imageURLs[0]]];
+        PFObject* dateImage = itemModel.images[0];
+        [dateImage refresh];
+        [cell.topImage setImage:[TWUtility getUIImageWithPFObject:dateImage]];
         cell.topImage.contentMode = UIViewContentModeScaleAspectFit;
         
         cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
         
-        cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow];
+        cell.comments.text = [TWUtility commentsBlockFromNSArray:itemModel.comments withAmount:numOfCommentsToShow];
         
 //        CGFloat fixedWidth = cell.commentsBlock.frame.size.width;
 //        CGSize newSize = [cell.commentsBlock sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
@@ -325,15 +351,15 @@ NSMutableDictionary* commentsFrameDict;
 //
 //        cell.heightConstraint.constant = newFrame.size.height;
       
-        cell.heightConstraint.constant = [cell.commentsBlock sizeThatFits:CGSizeMake(cell.commentsBlock.frame.size.width, MAXFLOAT)].height;
+        cell.heightConstraint.constant = [cell.comments sizeThatFits:CGSizeMake(cell.comments.frame.size.width, MAXFLOAT)].height;
         
         cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
         
-        [cell.commentsBlock setUserInteractionEnabled:YES];
+        [cell.comments setUserInteractionEnabled:YES];
         TWTapGestureRecognizer *tgr = [[TWTapGestureRecognizer alloc] initWithTarget:self action:@selector(commentSectionPressed:)];
         tgr.commentsArray = itemModel.comments;
         [tgr setNumberOfTapsRequired:1];
-        [cell.commentsBlock addGestureRecognizer:tgr];
+        [cell.comments addGestureRecognizer:tgr];
         
         cell.index = (indexPath.row/2);
         
@@ -361,7 +387,7 @@ NSMutableDictionary* commentsFrameDict;
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
     
-    [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+    [headerCell.userProfileImage setImage:itemModel.userProfileImage];
     
     headerCell.userProfileImage.layer.cornerRadius = 24.0;
     headerCell.userProfileImage.clipsToBounds = YES;
@@ -421,8 +447,5 @@ NSMutableDictionary* commentsFrameDict;
         
     }
 }
-
-
-
 
 @end

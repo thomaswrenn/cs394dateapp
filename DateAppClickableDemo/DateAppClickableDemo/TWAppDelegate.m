@@ -15,13 +15,13 @@
     // Override point for customization after application launch.
     [Parse setApplicationId:@"OoHIkXP4veqn7ch2kLv5UojFwQzyFC37QJDBaoir"
                   clientKey:@"ZdZ8sonuTHkAYzKWwQSu2EFBH1ThPNgl1PklDd5C"];
-    [PFUser logInWithUsernameInBackground:@"thomaswrenn" password:@"Turtle1458" block:^(PFUser *user, NSError *error) {
-        if (user) {
-            
-        } else {
-            NSLog(@"login to thomaswrenn failed");
-        }
-    }]
+    [PFUser logInWithUsername:@"thomaswrenn" password:@"Turtle1458"];
+    PFUser* loggedInUser = [PFUser currentUser];
+    if (loggedInUser) {
+        NSLog(@"login to thomaswrenn successful");
+    } else {
+        NSLog(@"login to thomaswrenn failed");
+    }
     return YES;
 }
 							

@@ -19,5 +19,6 @@
 + (NSString *)locationsFromNSArray:(NSMutableArray *)nsarray;
 
 + (void)getDatesWithCallback:(void (^)(NSArray *dates, NSError *error))completionBlock;
++ (UIImage *)getUIImageWithPFObject:(PFObject *)image;
 
 @end

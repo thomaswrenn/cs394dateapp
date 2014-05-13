@@ -10,12 +10,12 @@
 
 @property (strong, nonatomic) NSMutableString *username;
 @property (strong, nonatomic) NSDate          *timePosted;
-@property (strong, nonatomic) NSMutableString *userProfileImage;
+@property (strong, nonatomic) UIImage         *userProfileImage;
 @property (strong, nonatomic) NSMutableArray  *images;
 @property (strong, nonatomic) NSMutableArray  *locations;
 @property (strong, nonatomic) NSMutableArray  *likes;
 @property (strong, nonatomic) NSMutableArray  *comments;
 
-- (TWFeedItemModel*)initFromPFObject:(PFObject *)datePFObject;
+- (id)initWithPFObject:(PFObject *)datePFObject;
 
 @end

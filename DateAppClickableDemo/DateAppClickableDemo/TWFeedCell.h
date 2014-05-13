@@ -10,14 +10,13 @@
 
 @interface TWFeedCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView        *topImage;// TODO: For Now
+@property (strong, nonatomic) IBOutlet UIImageView                *topImage;// TODO: For Now
 // TODO: UIView Subclass with xib for what a comment or location looks like and have an array of comment views
 // @property (strong, nonatomic) IBOutlet UITextView         *commentsBlock;
 @property (strong, nonatomic) IBOutlet AMAttributedHighlightLabel *comments;
-@property (strong, nonatomic) IBOutlet UILabel            *likeCount;
-@property (strong, nonatomic) IBOutlet UILabel            *locationsBlock;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
-@property (        nonatomic)          NSInteger          index;
-// TODO How to make UIButton collections for tokenized tags like locations and hashtags and have them wrap and all that
+@property (strong, nonatomic) IBOutlet UILabel                    *likeCount;
+@property (strong, nonatomic) IBOutlet UILabel                    *locationsBlock;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint         *heightConstraint;
+@property (        nonatomic)          NSInteger                   index;
 
 @end

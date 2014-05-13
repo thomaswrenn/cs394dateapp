@@ -12,9 +12,11 @@
 
 + (NSString *)commentFromCommentNSDict:(NSDictionary *)nsdict {
     NSString *commentString = @"";
-    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"user"]];
+    PFUser* commentingUser = [nsdict valueForKey:kTWPDateUserKey];
+    [commentingUser fetchIfNeeded];
+    commentString = [commentString stringByAppendingString: [commentingUser valueForKey:kTWPUserUsernameKey]];
     commentString = [commentString stringByAppendingString: @": "];
-    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"text"]];
+    commentString = [commentString stringByAppendingString: [nsdict valueForKey:@"text"]];
 //    commentString = [commentString stringByAppendingString: [nsdict objectForKey:@"\n"]];
     
     
@@ -60,7 +62,8 @@
 + (NSString *)locationsFromNSArray:(NSMutableArray *)nsarray {
     NSMutableString* locationsBlockString = [[NSMutableString alloc] init];
     for (NSInteger i = 0; i < nsarray.count; i++) {
-        NSString *location = nsarray[i];
+        PFObject* locationPFObject = [nsarray[i] fetchIfNeeded];
+        NSString *location = [locationPFObject valueForKeyPath:kTWPUserLocationNameKey];
         [locationsBlockString appendString: [[self class] locationFromJSONItem:location]];
         [locationsBlockString appendString: @" "];
     }
@@ -70,6 +73,7 @@
 
 + (void)getDatesWithCallback:(void (^)(NSArray *dates, NSError *error))completionBlock {
     PFQuery *dateQuery = [PFQuery queryWithClassName:kTWPDateClassKey];
+    [dateQuery clearCachedResult]; // !!! : Remove this
     NSArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
     [dateQuery whereKey:kTWPDateUserKey containedIn:following];
     [dateQuery setCachePolicy:kPFCachePolicyNetworkOnly];
@@ -81,6 +85,9 @@
      }];
 }
 
++ (UIImage *)getUIImageWithPFObject:(PFObject *)image {
+    return [UIImage imageWithData:[[image objectForKey:@"imageFile"] getData]];
+}
         /*
         // proceed to creating new like
         PFObject *likeActivity = [PFObject objectWithClassName:kPAPActivityClassKey];

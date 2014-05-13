@@ -10,31 +10,25 @@
 
 @implementation TWFeedItemModel
 
-- (id)init {
-    self = [super init];
-    
-    if (self) {
-        // initialize instance variables here
-         _userProfileImage = [[NSMutableString alloc] init];
-        _username = [[NSMutableString alloc] init];
-    }
-    
-    return self;
-}
-
-- (TWFeedItemModel*)initFromPFObject:(PFObject *)datePFObject {
-    self = [super init];
-    if (self) {
+- (id)initWithPFObject:(PFObject *)datePFObject {
+    if (self = [super init]) {
         PFUser* userPFObject = [datePFObject valueForKey:kTWPDateUserKey];
+        [userPFObject fetchIfNeeded];
         _username         = [userPFObject valueForKey:kTWPUserUsernameKey];
         _timePosted       = [datePFObject valueForKey:kTWPDateTimePostedKey];
-        _userProfileImage = [userPFObject valueForKey:kTWPUserUserProfileImageKey];
+        PFObject* profileImage = [userPFObject valueForKeyPath:kTWPUserUserProfileImageKey];
+        [profileImage fetchIfNeeded];
+        _userProfileImage = [TWUtility getUIImageWithPFObject:profileImage];
         _images           = [datePFObject valueForKey:kTWPDateImagesKey];
         _locations        = [datePFObject valueForKey:kTWPDateLocationsKey];
         _likes            = [datePFObject valueForKey:kTWPDateLikesKey];
         _comments         = [datePFObject valueForKey:kTWPDateCommentsKey];
     }
     return self;
+}
+
+- (id)init {
+    return [self initWithPFObject:[PFObject objectWithClassName:kTWPDateClassKey]];
 }
 
 @end
