@@ -43,6 +43,21 @@ NSMutableDictionary* commentsFrameDict;
 
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    /*self.feedDates = [[NSMutableArray alloc] init];
+    NSMutableArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
+    [following addObject:[PFUser currentUser]];
+    [TWUtility getDatesFromUsers:following withCallback:^(NSArray *dates, NSError *error) {
+        if (!error) {
+            NSLog(@"Fetched dates without error");
+            for (PFObject *date in dates) {
+                TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
+                [self.feedDates addObject: feedItem];
+            }
+        } else {
+            NSLog(@"Date Fetch Unsuccessful");
+        }
+        [self.tableView reloadData];
+    }];*/
     [self.tableView reloadData];
 }
 

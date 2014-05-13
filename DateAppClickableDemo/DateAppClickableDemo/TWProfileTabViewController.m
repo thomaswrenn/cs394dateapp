@@ -67,7 +67,20 @@ CGRect mapViewFrame;
 
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    
+    /*self.listingArray = [[NSMutableArray alloc] init];
+    NSMutableArray *onlySelf = [[NSMutableArray alloc] initWithObjects:[PFUser currentUser], nil];
+    [TWUtility getDatesFromUsers:onlySelf withCallback:^(NSArray *dates, NSError *error) {
+        if (!error) {
+            NSLog(@"Fetched dates without error");
+            for (PFObject *date in dates) {
+                TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
+                [self.listingArray addObject: feedItem];
+            }
+        } else {
+            NSLog(@"Date Fetch Unsuccessful");
+        }
+        [tableview reloadData];
+    }];*/
     [tableview reloadData];
 }
 
