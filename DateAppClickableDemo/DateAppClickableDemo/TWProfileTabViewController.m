@@ -91,22 +91,36 @@ CGRect mapViewFrame;
     tableviewFrame = tableview.frame;
     mapViewFrame = mapView.frame;
     
+    self.listingArray = [[NSMutableArray alloc] init];
+    [TWUtility getDatesWithCallback:^(NSArray *dates, NSError *error) {
+        if (!error) {
+            NSLog(@"Fetched dates without error");
+            for (PFObject *date in dates) {
+                TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
+                [self.listingArray addObject: feedItem];
+            }
+        } else {
+            NSLog(@"Date Fetch Unsuccessful");
+        }
+        [tableview reloadData];
+    }];
     
     
-    
-    
-    NSString* profileImageURL = @"http://engineering.nyu.edu/files/imagecache/profile_full/pictures/picture-346.jpg";
-    [profileName setText:@"Evan Gallagher"];
-    [profileImage setImageWithURL:[NSURL URLWithString:profileImageURL]];
+//    NSString* profileImageURL = @"http://engineering.nyu.edu/files/imagecache/profile_full/pictures/picture-346.jpg";
+    PFUser* loggedInUser = [PFUser currentUser];
+    [profileName setText:[loggedInUser valueForKey:kTWPUserUsernameKey]];
+//    [profileName setText:@"Evan Gallagher"];
+    [profileImage setImage:[TWUtility getUIImageWithPFObject:[[loggedInUser valueForKey:kTWPUserUserProfileImageKey] fetchIfNeeded]]];
+//    [profileImage setImageWithURL:[NSURL URLWithString:profileImageURL]];
     profileImage.layer.cornerRadius = 48.0;
     profileImage.clipsToBounds = YES;
     
-    NSMutableArray* locationArray = [NSMutableArray arrayWithObjects:@"Brooklyn", @"NY", nil];
-    profileLocation.text = [TWUtility locationsFromNSArray: locationArray];
+//    NSMutableArray* locationArray = [NSMutableArray arrayWithObjects:@"Brooklyn", @"NY", nil];
+    profileLocation.text = @"Brooklyn, NY"; // !!!: Hardcoded!
     
     
     
-    
+    /*
     //fake data
     
     NSString *imgTemp1 = @"http://2.bp.blogspot.com/-kIcv0j4joXk/UNjA-UtjuWI/AAAAAAAAAww/QLAtP5pe7IA/s1600/best-date-nights-san-diego.jpg";
@@ -174,7 +188,7 @@ CGRect mapViewFrame;
         [listingArray addObject: itemModel];
     }
     [tableview reloadData];
-
+*/
     
     
     
@@ -339,7 +353,8 @@ CGRect mapViewFrame;
         
         headerCell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
         
-        [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+//        [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+        [headerCell.userProfileImage setImage:itemModel.userProfileImage];
         
         headerCell.userProfileImage.layer.cornerRadius = 24.0;
         headerCell.userProfileImage.clipsToBounds = YES;
@@ -354,7 +369,8 @@ CGRect mapViewFrame;
     if(indexPath.row % 2 == 0 ){//top one
         TWFeedTopCell *cell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
         
-        [cell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+//        [cell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+        [cell.userProfileImage setImage:itemModel.userProfileImage];
         cell.userProfileImage.layer.cornerRadius = 24.0;
         cell.userProfileImage.clipsToBounds = YES;
         
@@ -371,7 +387,10 @@ CGRect mapViewFrame;
     else{//bottom
         TWFeedCell *cell = (TWFeedCell *)[tableView dequeueReusableCellWithIdentifier:@"BottomCell"];
         
-        [ cell.topImage setImageWithURL:[NSURL URLWithString:itemModel.imageURLs[0]]];
+//        [ cell.topImage setImageWithURL:[NSURL URLWithString:itemModel.imageURLs[0]]];
+        PFObject* dateImage = itemModel.images[0];
+        [dateImage fetchIfNeeded];
+        [cell.topImage setImage:[TWUtility getUIImageWithPFObject:dateImage]];
         cell.topImage.contentMode = UIViewContentModeScaleAspectFit;
         
         cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
@@ -421,7 +440,8 @@ CGRect mapViewFrame;
     TWFeedItemModel *itemModel = [listingArray objectAtIndex: index];
     
     
-    [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+//    [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+    [headerCell.userProfileImage setImage:itemModel.userProfileImage];
     
     headerCell.userProfileImage.layer.cornerRadius = 24.0;
     headerCell.userProfileImage.clipsToBounds = YES;
