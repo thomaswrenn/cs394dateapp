@@ -74,7 +74,7 @@
 + (void)getDatesFromUsers:(NSMutableArray *)fromUsers withCallback:(void (^)(NSArray *dates, NSError *error))completionBlock {
     PFQuery *dateQuery = [PFQuery queryWithClassName:kTWPDateClassKey];
     [dateQuery whereKey:kTWPDateUserKey containedIn:fromUsers];
-    [dateQuery orderByAscending:@"createdAt"]; 
+    [dateQuery orderByDescending:kTWPDateTimePostedKey];
     [dateQuery setCachePolicy:kPFCachePolicyNetworkOnly];
     [dateQuery findObjectsInBackgroundWithBlock:^(NSArray *dates, NSError *error)
      {
