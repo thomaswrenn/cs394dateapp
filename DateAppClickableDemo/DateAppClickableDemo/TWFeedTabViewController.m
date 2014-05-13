@@ -68,13 +68,6 @@ NSMutableDictionary* commentsFrameDict;
     
     headerCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
     
-//    dispatch_async(kBgQueue, ^{
-//        NSData* data = [NSData dataWithContentsOfURL:
-//                        kfeedItemsJSONURL];
-//        [self performSelectorOnMainThread:@selector(fetchedData:)
-//                               withObject:data waitUntilDone:YES];
-//    });
-    
     [TWUtility getDatesWithCallback:^(NSArray *dates, NSError *error) {
         if (!error) {
             NSLog(@"Fetched dates without error");
@@ -87,105 +80,10 @@ NSMutableDictionary* commentsFrameDict;
             NSLog(@"Date Fetch Unsuccessful");
         }
     }];
-    /*
-    NSString *imgTemp1 = @"http://2.bp.blogspot.com/-kIcv0j4joXk/UNjA-UtjuWI/AAAAAAAAAww/QLAtP5pe7IA/s1600/best-date-nights-san-diego.jpg";
-    
-    NSString *imgTemp2 = @"http://engineering.nyu.edu/files/imagecache/profile_full/pictures/picture-204.jpg";
-    
-    NSString *imgTemp3 = @"http://www.themartellexperience.com/wp-content/uploads/2010/08/Restaurant-for-Romantic-Date-in-Moncton-New-Brunswick-Canada.jpg";
-    
-    for (NSInteger i = 0; i < 30; i++) {
-        TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
-        
-        // TODO Assign each thing to the proper thing
-        NSString *name = [NSMutableString stringWithFormat:@"Jessica Wu %ld", (i+1)];
-        [itemModel.username setString: name];
-        [itemModel.userProfileImageURL setString:imgTemp2];
-        itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] timeIntervalSince1970]];
-        itemModel.imageURLs = [NSMutableArray arrayWithObjects:imgTemp1,imgTemp3, nil];
-        NSArray *keys = [NSArray arrayWithObjects:@"user", @"text",@"\n", nil];
-        NSArray *objects = [NSArray arrayWithObjects:@"Jessica", @"awesome date!",@"\n", nil];
-        NSDictionary *dictionary1 = [NSDictionary dictionaryWithObjects:objects
-                                                               forKeys:keys];
-        
-        NSArray *objects2 = [NSArray arrayWithObjects:@"Tom", @"Woah nice sunset :)",@"\n", nil];
-        NSDictionary *dictionary2 = [NSDictionary dictionaryWithObjects:objects2
-                                                                forKeys:keys];
-        
-        NSArray *objects3 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
-        NSDictionary *dictionary3 = [NSDictionary dictionaryWithObjects:objects3
-                                                                forKeys:keys];
-        
-        NSArray *objects4 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
-        NSDictionary *dictionary4 = [NSDictionary dictionaryWithObjects:objects4
-                                                                forKeys:keys];
-        
-        NSArray *objects5 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
-        NSDictionary *dictionary5 = [NSDictionary dictionaryWithObjects:objects5
-                                                                forKeys:keys];
-        
-        NSArray *objects6 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too! Awesome Awesome Awesome Awesome",@"\n", nil];
-        NSDictionary *dictionary6 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary7 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary8 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary9 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary10 = [NSDictionary dictionaryWithObjects:objects
-                                                                forKeys:keys];
-        
-        if( i == 2 || i == 3 ){
-            itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, nil];
-        }
-        else{
-            itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, dictionary3, dictionary4, dictionary5, dictionary6, dictionary7,dictionary8,dictionary9,dictionary10, nil];
-        }
-        itemModel.locations = [NSMutableArray arrayWithObjects:@"Brooklyn", @"NY", nil];
-        itemModel.likes = [NSMutableArray arrayWithObjects:@"a",@"b",@"c",@"d", nil];
-
-        [self.feedDates addObject: itemModel];
-    }
-    [self.tableView reloadData];
-     */
-    
 }
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
-}
-
-- (void)fetchedData:(NSData *)responseData {
-    // parse out the json data
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:responseData
-                          options:kNilOptions
-                          error:&error];
-    
-    NSArray *jsonFeedItems = [json objectForKey:@"dates"];
-    
-    for (NSInteger i = 0; i < jsonFeedItems.count; i++) {
-        NSDictionary *json = jsonFeedItems[i];
-        TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
-        
-        // TODO Assign each thing to the proper thing
-        itemModel.username = [json objectForKey:@"username"];
-        itemModel.userProfileImage = [json objectForKey:@"userProfileImageURL"];
-        itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[json objectForKey:@"timePosted"] doubleValue]];
-        itemModel.images = [json objectForKey:@"images"];
-        itemModel.comments = [json objectForKey:@"comments"];
-        itemModel.locations = [json objectForKey:@"locations"];
-        itemModel.likes = [json objectForKey:@"likes"];
-
-        [self.feedDates addObject: itemModel];
-        [self.tableView reloadData];
-    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -55,7 +55,7 @@ enum
         
         [myAlertView show];
         
-        self.imagePickerController.cameraOverlayView = [[TWCreateTabViewController alloc ]initWithNibName:@"OverlayViewController" bundle:nil].view;
+        self.imagePickerController.cameraOverlayView = [[TWCreateTabViewController alloc ]initWithNibName:@"overlay" bundle:nil].view;
 
     
     }
