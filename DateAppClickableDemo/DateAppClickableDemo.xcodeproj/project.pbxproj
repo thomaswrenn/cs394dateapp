@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2249D2271922865E00466FBC /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2249D2221922865E00466FBC /* Filter.m */; };
+		2249D2291922865E00466FBC /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2249D2261922865E00466FBC /* UIImage+Extensions.m */; };
+		2249D22B1922887B00466FBC /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2249D22A1922887B00466FBC /* logo.png */; };
 		224A3AAE18F5CFC700166EF7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224A3AAD18F5CFC700166EF7 /* CoreAudio.framework */; };
 		224A3AB018F5CFD100166EF7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224A3AAF18F5CFD100166EF7 /* CoreMedia.framework */; };
 		224A3AB218F5CFDC00166EF7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224A3AB118F5CFDC00166EF7 /* OpenGLES.framework */; };
@@ -84,6 +87,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2249D2211922865E00466FBC /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		2249D2221922865E00466FBC /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
+		2249D2251922865E00466FBC /* UIImage+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
+		2249D2261922865E00466FBC /* UIImage+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extensions.m"; sourceTree = "<group>"; };
+		2249D22A1922887B00466FBC /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		224A3AAD18F5CFC700166EF7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		224A3AAF18F5CFD100166EF7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		224A3AB118F5CFDC00166EF7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -354,9 +362,14 @@
 				753668F418EA254C005ACE73 /* TWProfileTabViewController.h */,
 				753668F518EA254C005ACE73 /* TWProfileTabViewController.m */,
 				753668F118EA2538005ACE73 /* TWCreateTabViewController.h */,
+				2249D2211922865E00466FBC /* Filter.h */,
+				2249D2221922865E00466FBC /* Filter.m */,
+				2249D2251922865E00466FBC /* UIImage+Extensions.h */,
+				2249D2261922865E00466FBC /* UIImage+Extensions.m */,
 				753668F218EA2538005ACE73 /* TWCreateTabViewController.m */,
 				2262251B191814AB0019E9F2 /* overlay.xib */,
 				7543998A18E24EF500C667BD /* Images.xcassets */,
+				2249D22A1922887B00466FBC /* logo.png */,
 				22DC092B18FCC40800A0E217 /* big add.png */,
 				7543997618E24EF500C667BD /* Supporting Files */,
 				75F610F5190F50FA007B7F8E /* TWFeedDataSource.h */,
@@ -512,6 +525,7 @@
 				7543998B18E24EF500C667BD /* Images.xcassets in Resources */,
 				22DC092C18FCC40800A0E217 /* big add.png in Resources */,
 				7543997A18E24EF500C667BD /* InfoPlist.strings in Resources */,
+				2249D22B1922887B00466FBC /* logo.png in Resources */,
 				75F610E2190F0FD1007B7F8E /* generate_constants.py in Resources */,
 				7543998318E24EF500C667BD /* Main.storyboard in Resources */,
 			);
@@ -650,11 +664,13 @@
 				7543998018E24EF500C667BD /* TWAppDelegate.m in Sources */,
 				3C43DDC0191886CC00F35F65 /* SDWebImageManager.m in Sources */,
 				3C43DDBD191886CC00F35F65 /* SDWebImageDecoder.m in Sources */,
+				2249D2291922865E00466FBC /* UIImage+Extensions.m in Sources */,
 				3C43DDBF191886CC00F35F65 /* SDWebImageDownloaderOperation.m in Sources */,
 				75F610F7190F50FA007B7F8E /* TWFeedDataSource.m in Sources */,
 				3CB7BAB91914676800DDBD5C /* TWFeedTopCell.m in Sources */,
 				3C43DDB9191886CC00F35F65 /* MKAnnotationView+WebCache.m in Sources */,
 				3C43DDBC191886CC00F35F65 /* SDWebImageCompat.m in Sources */,
+				2249D2271922865E00466FBC /* Filter.m in Sources */,
 				3C4F135E191B1D9B005D09D2 /* TWCellFrameData.m in Sources */,
 				3C43DDC2191886CC00F35F65 /* UIButton+WebCache.m in Sources */,
 				3C43DDC3191886CC00F35F65 /* UIImage+GIF.m in Sources */,
