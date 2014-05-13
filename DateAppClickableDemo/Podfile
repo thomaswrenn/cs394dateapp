@@ -1,3 +1,4 @@
 platform :ios, '7.0'
 pod 'YLMoment', '~> 0.5'
+pod 'AMAttributedHighlightLabel', '~> 0.0'
 #pod "IntentKit"
