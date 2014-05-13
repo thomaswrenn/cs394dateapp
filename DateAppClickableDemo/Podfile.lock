@@ -1,13 +1,15 @@
 PODS:
-  - AMAttributedHighlightLabel (0.0.1)
+  - MDMultilineTextView (0.0.5):
+    - MDMultilineTextView/Core
+  - MDMultilineTextView/Core (0.0.5)
   - YLMoment (0.5.0)
 
 DEPENDENCIES:
-  - AMAttributedHighlightLabel (~> 0.0)
+  - MDMultilineTextView (~> 0.0)
   - YLMoment (~> 0.5)
 
 SPEC CHECKSUMS:
-  AMAttributedHighlightLabel: fe668dddfcdabb2dcc32cec46d7371bcf845897c
+  MDMultilineTextView: 974ab30e47baffcc26e03abcba3566b36993845d
   YLMoment: 8afae58eabe5c363616445cd69b29c79680abfa9
 
 COCOAPODS: 0.32.1

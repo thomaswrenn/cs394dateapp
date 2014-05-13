@@ -20,20 +20,18 @@
     UIScrollView *filtersScrollView;
     UIView *selectedFilterView;
     UIImage *finalImage;
+    NSUInteger filterIndex;
     
 }
 
-//@property (weak, nonatomic) IBOutlet UIButton *addPic;
+@property (strong, nonatomic) IBOutlet UILabel *username;
+
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *chooseLocation;
 @property (weak, nonatomic) IBOutlet UITextField *locations;
 
-//- (IBAction)album:(UIButton *)sender;
-//- (IBAction)addPicture:(UIButton *)sender;
-//- (IBAction)submit:(UIButton *)sender;
-//- (IBAction)retakePic:(UIButton *)sender;
 - (IBAction)locationToggle:(UISegmentedControl *)sender;
--(IBAction)ReturnKeyButton:(id)sender;
+- (IBAction)ReturnKeyButton:(id)sender;
 
 - (IBAction)camera:(id)sender;
 - (IBAction)photoalbum:(id)sender;
@@ -44,9 +42,7 @@
 //- (IBAction)startStop:(id)sender;
 //- (IBAction)timedTakePhoto:(id)sender;
 
-
 //@property (weak, nonatomic) IBOutlet UIView *cameraOverlay;
-
 //@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 //@property (weak, nonatomic) IBOutlet UIBarButtonItem *takePictureButton;
 //@property (weak, nonatomic) IBOutlet UIBarButtonItem *timedButton;
@@ -56,8 +52,8 @@
 //@property (nonatomic, retain) NSTimer *tickTimer;
 //@property (nonatomic, retain) NSTimer *cameraTimer;
 
-
 //@property (nonatomic, retain) UIImagePickerController *imagePickerController;
 
+- (void) changeFilter:(UISwipeGestureRecognizer *)recognizer;
 
 @end

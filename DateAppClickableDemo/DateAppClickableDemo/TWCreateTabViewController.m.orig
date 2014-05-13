@@ -45,11 +45,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
-//    [self.view addGestureRecognizer:gestureRecognizer];
-    // TODO: For now: Change to swipe to change filters
-    UISwipeGestureRecognizer *filterChangeSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(changeFilter:)];
-    [self.view addGestureRecognizer:filterChangeSwipe];
     [self setup];
 }
 
@@ -59,12 +54,6 @@
     [self initializeFilterContext];
     [self loadFiltersForImage:[UIImage imageNamed:@"logo.png"]];
 }
-
-//#pragma mark - Hide Keyboard
-//- (void)dismissKeyboard:(id)sender
-//{
-//    [self.multiTextView resignFirstResponder];
-//}
 
 -(void) initializeFilterContext
 {
@@ -76,6 +65,19 @@
     //filtersScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 300, self.view.bounds.size.width, 90)];
     filtersScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 120, self.view.bounds.size.width, 90)];
     
+<<<<<<< HEAD
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                              message:@"Device has no camera"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles: nil];
+        
+        [myAlertView show];
+        
+        self.imagePickerController.cameraOverlayView = [[TWCreateTabViewController alloc ]initWithNibName:@"overlay" bundle:nil].view;
+=======
     [filtersScrollView setScrollEnabled:YES];
     [filtersScrollView setShowsVerticalScrollIndicator:NO];
     filtersScrollView.showsHorizontalScrollIndicator = NO;
@@ -90,6 +92,7 @@
     [self.view addSubview:filtersScrollView];
     
 }
+>>>>>>> origin/filtercamera
 
 -(void) applyGesturesToFilterPreviewImageView:(UIView *) view
 {
@@ -98,17 +101,6 @@
     singleTapGestureRecognizer.numberOfTapsRequired = 1;
     
     [view addGestureRecognizer:singleTapGestureRecognizer];
-}
-
--(void) changeFilter:(UISwipeGestureRecognizer *)recognizer {
-    NSLog(@"newFilter %i", filterIndex);
-    filterIndex          = ((filterIndex+1)%([filters count]));
-    Filter *filter       = [filters objectAtIndex:(filterIndex)];
-    CIImage *outputImage = [filter.filter outputImage];
-    CGImageRef cgimg     = [context createCGImage:outputImage fromRect:[outputImage extent]];
-    finalImage           = [UIImage imageWithCGImage:cgimg];
-    [self.imageView setImage:finalImage];
-    CGImageRelease(cgimg);
 }
 
 
@@ -226,10 +218,11 @@
     [filters addObjectsFromArray:[NSArray arrayWithObjects:
                                   [[Filter alloc] initWithNameAndFilter:@"Sepia" filter:sepiaFilter],
                                   [[Filter alloc] initWithNameAndFilter:@"Mono" filter:colorMonochrome]
+                                  
                                   , nil]];
-    filterIndex = 0;
     
-    // [self createPreviewViewsForFilters];
+    
+    [self createPreviewViewsForFilters];
 }
 /*
  (void) takePicture:(id) sender
@@ -324,42 +317,6 @@
 - (IBAction)submit:(UIButton *)sender {
     // on submission, save image
     UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    PFFile *imageFile = [PFFile fileWithData:UIImageJPEGRepresentation(self.imageView.image, 0.05f)];
-    PFObject *newDate = [PFObject objectWithClassName:kTWPDateClassKey];
-    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            // Create a PFObject around a PFFile and associate it with the current user
-            PFObject *userPhoto = [PFObject objectWithClassName:@"UserPhoto"];
-            [userPhoto setObject:imageFile forKey:@"imageFile"];
-            
-            PFUser *user = [PFUser currentUser];
-            [userPhoto setObject:user forKey:@"user"];
-            
-            [userPhoto saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    [newDate setObject:@[userPhoto] forKey:kTWPDateImagesKey];
-                    [newDate setObject:[PFUser currentUser] forKey:kTWPDateUserKey];
-                    [newDate saveInBackgroundWithBlock:^(BOOL succeeded, NSError* error) {
-                        if (!error) {
-                        } else {
-                            NSLog(@"NOT SAVED!");
-                        }
-                    }];
-                }
-                else{
-                    // Log details of the failure
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
-                }
-            }];
-        }
-        else{
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-    } progressBlock:^(int percentDone) {
-        // Update your progress spinner here. percentDone will be between 0 and 100.
-    }];
-    
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo

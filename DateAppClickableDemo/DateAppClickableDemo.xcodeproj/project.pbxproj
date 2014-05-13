@@ -60,7 +60,6 @@
 		7543999C18E24EF500C667BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7543999A18E24EF500C667BD /* InfoPlist.strings */; };
 		7543999E18E24EF500C667BD /* DateAppClickableDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7543999D18E24EF500C667BD /* DateAppClickableDemoTests.m */; };
 		7560BBDF19207CF700D7CE8B /* TWConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7560BBDE19207CF700D7CE8B /* TWConstants.m */; };
-		75B0B8A719223BBC00573BA4 /* AMAttributedHighlightLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B0B8A619223BBC00573BA4 /* AMAttributedHighlightLabel.m */; };
 		75D519DE18EB943300A15C92 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F477D18EB872C00EC038B /* CFNetwork.framework */; };
 		75D519DF18EB944000A15C92 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7543997118E24EF500C667BD /* CoreGraphics.framework */; };
 		75D519E018EB945000A15C92 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 752F477F18EB873E00EC038B /* CoreLocation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -182,7 +181,6 @@
 		7543999D18E24EF500C667BD /* DateAppClickableDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateAppClickableDemoTests.m; sourceTree = "<group>"; };
 		7560BBDD19207CF700D7CE8B /* TWConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWConstants.h; sourceTree = "<group>"; };
 		7560BBDE19207CF700D7CE8B /* TWConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWConstants.m; sourceTree = "<group>"; };
-		75B0B8A619223BBC00573BA4 /* AMAttributedHighlightLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AMAttributedHighlightLabel.m; path = Pods/AMAttributedHighlightLabel/AMAttributedHighlightLabel/AMAttributedHighlightLabel.m; sourceTree = "<group>"; };
 		75D519E618EB950700A15C92 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		75F610E1190F0FD1007B7F8E /* generate_constants.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = generate_constants.py; sourceTree = "<group>"; };
 		75F610EF190F1585007B7F8E /* NSDate+JBWBuilders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+JBWBuilders.h"; sourceTree = "<group>"; };
@@ -283,7 +281,6 @@
 		7543996318E24EF500C667BD = {
 			isa = PBXGroup;
 			children = (
-				75B0B8A619223BBC00573BA4 /* AMAttributedHighlightLabel.m */,
 				7543997518E24EF500C667BD /* DateAppClickableDemo */,
 				7543999718E24EF500C667BD /* DateAppClickableDemoTests */,
 				7543996E18E24EF500C667BD /* Frameworks */,
@@ -639,7 +636,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75B0B8A719223BBC00573BA4 /* AMAttributedHighlightLabel.m in Sources */,
 				3C43DDBE191886CC00F35F65 /* SDWebImageDownloader.m in Sources */,
 				3C29A4BE191846E700690140 /* TWCommentTableViewCell.m in Sources */,
 				753668F918EA27EF005ACE73 /* TWFeedCell.m in Sources */,
