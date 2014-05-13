@@ -21,10 +21,8 @@
 #import "UIImageView+WebCache.h"
 #import "TWCellFrameData.h"
 
-NSString *kFeedCellID = @"feedCellID";  // UICollectionViewCell storyboard id
 BOOL isFirstCell = YES;
 NSMutableArray* commentsToSendToNextView;
-float totalCellYPast = 0;
 NSInteger numOfCommentsToShow = 5;
 
 NSMutableDictionary* commentsFrameDict;
@@ -85,7 +83,7 @@ NSMutableDictionary* commentsFrameDict;
         TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
         
         // TODO Assign each thing to the proper thing
-        NSString *name = [NSMutableString stringWithFormat:@"Jessica Wu %ld", (i+1)];
+        NSString *name = @"John Iacono";
         [itemModel.username setString: name];
         [itemModel.userProfileImageURL setString:imgTemp2];
         itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] timeIntervalSince1970]];
@@ -398,12 +396,7 @@ NSMutableDictionary* commentsFrameDict;
         totalNow = aData.total;
     }
     
-    NSLog(@"-----");
-    NSLog(@"y: %f",scrollView.contentOffset.y);
-    NSLog(@"total: %f",totalNow);
-    NSLog(@"diff: %f",(totalNow - (int)scrollView.contentOffset.y));
-    NSLog(@"-----");
-          
+
     if( ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
        && ((totalNow - (int)scrollView.contentOffset.y) >= 0)
        && firstVisibleIndexPath.row % 2 == 1){//touching other cell, moving other cell

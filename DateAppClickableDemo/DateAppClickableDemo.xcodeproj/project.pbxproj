@@ -793,10 +793,6 @@
 				);
 				INFOPLIST_FILE = "DateAppClickableDemo/DateAppClickableDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
-				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -825,10 +821,6 @@
 				);
 				INFOPLIST_FILE = "DateAppClickableDemo/DateAppClickableDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
-				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
