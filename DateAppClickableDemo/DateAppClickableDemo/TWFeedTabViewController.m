@@ -58,9 +58,10 @@ NSMutableDictionary* commentsFrameDict;
                 topViewExisted = YES;
             }
         }
-        if( !topViewExisted ){
-            [[self.view superview] insertSubview:headerCell aboveSubview:self.tableView];
-        }
+// ???: Made the headers not work with my Parse code
+//        if( !topViewExisted ){
+//            [[self.view superview] insertSubview:headerCell aboveSubview:self.tableView];
+//        }
     }
 }
 
@@ -276,12 +277,12 @@ NSMutableDictionary* commentsFrameDict;
     
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
+    
     [headerCell.userProfileImage setImage:itemModel.userProfileImage];
     
     headerCell.userProfileImage.layer.cornerRadius = 24.0;
     headerCell.userProfileImage.clipsToBounds = YES;
-    //[headerCell.username setText:itemModel.username];
-    [headerCell.username setText:@"Castille"];
+    [headerCell.username setText:itemModel.username];
     
     headerCell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
     headerCell.index = index;
@@ -326,9 +327,11 @@ NSMutableDictionary* commentsFrameDict;
     NSLog(@"-----");
     */
      
-    if( ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
-       && ((totalNow - (int)scrollView.contentOffset.y) >= 0)
-       && firstVisibleIndexPath.row % 2 == 1){//touching other cell, moving other cell
+    if ( // touching other cell, moving other cell
+            ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
+         && ((totalNow - (int)scrollView.contentOffset.y) >= 0)
+         && (firstVisibleIndexPath.row % 2 == 1)
+       ) {
         int pos = totalNow - (int)scrollView.contentOffset.y - TOP_CELL_HEIGHT;
         headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
         [self updateTopCell:scrollView];
