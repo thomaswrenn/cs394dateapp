@@ -73,7 +73,9 @@ NSMutableDictionary* commentsFrameDict;
     
     headerCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
     
-    [TWUtility getDatesWithCallback:^(NSArray *dates, NSError *error) {
+    NSMutableArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
+    [following addObject:[PFUser currentUser]];
+    [TWUtility getDatesFromUsers:following withCallback:^(NSArray *dates, NSError *error) {
         if (!error) {
             NSLog(@"Fetched dates without error");
             for (PFObject *date in dates) {

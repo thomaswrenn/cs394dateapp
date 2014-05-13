@@ -71,12 +71,10 @@
 
 }
 
-+ (void)getDatesWithCallback:(void (^)(NSArray *dates, NSError *error))completionBlock {
++ (void)getDatesFromUsers:(NSMutableArray *)fromUsers withCallback:(void (^)(NSArray *dates, NSError *error))completionBlock {
     PFQuery *dateQuery = [PFQuery queryWithClassName:kTWPDateClassKey];
     [dateQuery clearCachedResult]; // !!! : Remove this
-    NSMutableArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
-    [following addObject:[PFUser currentUser]];
-    [dateQuery whereKey:kTWPDateUserKey containedIn:following];
+    [dateQuery whereKey:kTWPDateUserKey containedIn:fromUsers];
     [dateQuery setCachePolicy:kPFCachePolicyNetworkOnly];
     [dateQuery findObjectsInBackgroundWithBlock:^(NSArray *dates, NSError *error)
      {

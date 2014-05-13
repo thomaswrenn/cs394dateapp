@@ -92,7 +92,9 @@ CGRect mapViewFrame;
     mapViewFrame = mapView.frame;
     
     self.listingArray = [[NSMutableArray alloc] init];
-    [TWUtility getDatesWithCallback:^(NSArray *dates, NSError *error) {
+    NSMutableArray *onlySelf = [[NSMutableArray alloc] initWithObjects:[PFUser currentUser], nil];
+    
+    [TWUtility getDatesFromUsers:onlySelf withCallback:^(NSArray *dates, NSError *error) {
         if (!error) {
             NSLog(@"Fetched dates without error");
             for (PFObject *date in dates) {
