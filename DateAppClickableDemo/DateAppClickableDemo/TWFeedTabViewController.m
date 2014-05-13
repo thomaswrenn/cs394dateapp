@@ -9,10 +9,6 @@
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) //1
 #define kfeedItemsJSONURL [NSURL URLWithString: @"https://dl.dropboxusercontent.com/u/641088/DateApp/feedRESTcall.json"] //2
 
-#import <YLMoment.h>
-#import "TWUtility.h"
-#import "TWFeedItemModel.h"
-#import "TWFeedCell.h"
 #import "TWFeedTabViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TWFeedTopCell.h"
@@ -21,10 +17,8 @@
 #import "UIImageView+WebCache.h"
 #import "TWCellFrameData.h"
 
-NSString *kFeedCellID = @"feedCellID";  // UICollectionViewCell storyboard id
 BOOL isFirstCell = YES;
 NSMutableArray* commentsToSendToNextView;
-float totalCellYPast = 0;
 NSInteger numOfCommentsToShow = 5;
 
 NSMutableDictionary* commentsFrameDict;
@@ -36,10 +30,37 @@ NSMutableDictionary* commentsFrameDict;
 @implementation TWFeedTabViewController
 @synthesize headerCell;
 
+# pragma mark - AMAttributedHighlightLabelDelegate
+-(void)selectedMention:(NSString *)string {
+    NSLog(@"mention: %@", string);
+}
+-(void)selectedHashtag:(NSString *)string {
+    NSLog(@"hashtag: %@", string);
+}
+-(void)selectedLink:(NSString *)string {
+    NSLog(@"link: %@", string);
+}
 
 -(void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self.tableView reloadData];
+    
+    NSMutableArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
+    [following addObject:[PFUser currentUser]];
+    [TWUtility getDatesFromUsers:following withCallback:^(NSArray *dates, NSError *error) {
+        if (!error) {
+            NSLog(@"Fetched dates without error");
+            self.feedDates = [[NSMutableArray alloc] init];
+            headerCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
+            for (PFObject *date in dates) {
+                TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
+                [self.feedDates addObject: feedItem];
+            }
+        } else {
+            NSLog(@"Date Fetch Unsuccessful");
+        }
+        [self.tableView reloadData];
+    }];
+//    [self.tableView reloadData];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -52,9 +73,10 @@ NSMutableDictionary* commentsFrameDict;
                 topViewExisted = YES;
             }
         }
-        if( !topViewExisted ){
-            [[self.view superview] insertSubview:headerCell aboveSubview:self.tableView];
-        }
+// ???: Made the headers not work with my Parse code
+//        if( !topViewExisted ){
+//            [[self.view superview] insertSubview:headerCell aboveSubview:self.tableView];
+//        }
     }
 }
 
@@ -62,116 +84,32 @@ NSMutableDictionary* commentsFrameDict;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.feedDates = [[NSMutableArray alloc] init];
     
     commentsFrameDict = [[NSMutableDictionary alloc] init];
-    
+    /*
+    self.feedDates = [[NSMutableArray alloc] init];
+     
     headerCell = (TWFeedTopCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopCell"];
     
-//    dispatch_async(kBgQueue, ^{
-//        NSData* data = [NSData dataWithContentsOfURL:
-//                        kfeedItemsJSONURL];
-//        [self performSelectorOnMainThread:@selector(fetchedData:)
-//                               withObject:data waitUntilDone:YES];
-//    });
-    
-    NSString *imgTemp1 = @"http://2.bp.blogspot.com/-kIcv0j4joXk/UNjA-UtjuWI/AAAAAAAAAww/QLAtP5pe7IA/s1600/best-date-nights-san-diego.jpg";
-    
-    NSString *imgTemp2 = @"http://engineering.nyu.edu/files/imagecache/profile_full/pictures/picture-204.jpg";
-    
-    NSString *imgTemp3 = @"http://www.themartellexperience.com/wp-content/uploads/2010/08/Restaurant-for-Romantic-Date-in-Moncton-New-Brunswick-Canada.jpg";
-    
-    for (NSInteger i = 0; i < 30; i++) {
-        TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
-        
-        // TODO Assign each thing to the proper thing
-        NSString *name = [NSMutableString stringWithFormat:@"Jessica Wu %ld", (i+1)];
-        [itemModel.username setString: name];
-        [itemModel.userProfileImageURL setString:imgTemp2];
-        itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] timeIntervalSince1970]];
-        itemModel.imageURLs = [NSMutableArray arrayWithObjects:imgTemp1,imgTemp3, nil];
-        NSArray *keys = [NSArray arrayWithObjects:@"user", @"text",@"\n", nil];
-        NSArray *objects = [NSArray arrayWithObjects:@"Jessica", @"awesome date!",@"\n", nil];
-        NSDictionary *dictionary1 = [NSDictionary dictionaryWithObjects:objects
-                                                               forKeys:keys];
-        
-        NSArray *objects2 = [NSArray arrayWithObjects:@"Tom", @"Woah nice sunset :)",@"\n", nil];
-        NSDictionary *dictionary2 = [NSDictionary dictionaryWithObjects:objects2
-                                                                forKeys:keys];
-        
-        NSArray *objects3 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
-        NSDictionary *dictionary3 = [NSDictionary dictionaryWithObjects:objects3
-                                                                forKeys:keys];
-        
-        NSArray *objects4 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
-        NSDictionary *dictionary4 = [NSDictionary dictionaryWithObjects:objects4
-                                                                forKeys:keys];
-        
-        NSArray *objects5 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too!",@"\n", nil];
-        NSDictionary *dictionary5 = [NSDictionary dictionaryWithObjects:objects5
-                                                                forKeys:keys];
-        
-        NSArray *objects6 = [NSArray arrayWithObjects:@"Sam", @"I would love to go there too! Awesome Awesome Awesome Awesome",@"\n", nil];
-        NSDictionary *dictionary6 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary7 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary8 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary9 = [NSDictionary dictionaryWithObjects:objects6
-                                                                forKeys:keys];
-        
-        NSDictionary *dictionary10 = [NSDictionary dictionaryWithObjects:objects
-                                                                forKeys:keys];
-        
-        if( i == 2 || i == 3 ){
-            itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, nil];
+    NSMutableArray *following = [[PFUser currentUser] valueForKey:kTWPUserFollowingKey];
+    [following addObject:[PFUser currentUser]];
+    [TWUtility getDatesFromUsers:following withCallback:^(NSArray *dates, NSError *error) {
+        if (!error) {
+            NSLog(@"Fetched dates without error");
+            for (PFObject *date in dates) {
+                TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
+                [self.feedDates addObject: feedItem];
+            }
+        } else {
+            NSLog(@"Date Fetch Unsuccessful");
         }
-        else{
-            itemModel.comments = [NSMutableArray arrayWithObjects:dictionary1, dictionary2, dictionary3, dictionary4, dictionary5, dictionary6, dictionary7,dictionary8,dictionary9,dictionary10, nil];
-        }
-        itemModel.locations = [NSMutableArray arrayWithObjects:@"Brooklyn", @"NY", nil];
-        itemModel.likes = [NSMutableArray arrayWithObjects:@"a",@"b",@"c",@"d", nil];
-
-        [self.feedDates addObject: itemModel];
-    }
-    [self.tableView reloadData];
-    
+        [self.tableView reloadData];
+    }];
+     */
 }
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
-}
-
-- (void)fetchedData:(NSData *)responseData {
-    // parse out the json data
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:responseData
-                          options:kNilOptions
-                          error:&error];
-    
-    NSArray *jsonFeedItems = [json objectForKey:@"dates"];
-    
-    for (NSInteger i = 0; i < jsonFeedItems.count; i++) {
-        NSDictionary *json = jsonFeedItems[i];
-        TWFeedItemModel *itemModel = [[TWFeedItemModel alloc] init];
-        
-        // TODO Assign each thing to the proper thing
-        itemModel.username = [json objectForKey:@"username"];
-        itemModel.userProfileImageURL = [json objectForKey:@"userProfileImageURL"];
-        itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[json objectForKey:@"timePosted"] doubleValue]];
-        itemModel.imageURLs = [json objectForKey:@"images"];
-        itemModel.comments = [json objectForKey:@"comments"];
-        itemModel.locations = [json objectForKey:@"locations"];
-        itemModel.likes = [json objectForKey:@"likes"];
-
-        [self.feedDates addObject: itemModel];
-        [self.tableView reloadData];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -275,7 +213,7 @@ NSMutableDictionary* commentsFrameDict;
         
         headerCell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
 
-        [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+        [headerCell.userProfileImage setImage:itemModel.userProfileImage];
         
         headerCell.userProfileImage.layer.cornerRadius = 24.0;
         headerCell.userProfileImage.clipsToBounds = YES;
@@ -290,7 +228,7 @@ NSMutableDictionary* commentsFrameDict;
     if(indexPath.row % 2 == 0 ){//top one
         TWFeedTopCell *cell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
 
-        [cell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+        [cell.userProfileImage setImage:itemModel.userProfileImage];
         cell.userProfileImage.layer.cornerRadius = 24.0;
         cell.userProfileImage.clipsToBounds = YES;
         
@@ -307,7 +245,9 @@ NSMutableDictionary* commentsFrameDict;
     else{//bottom
         TWFeedCell *cell = (TWFeedCell *)[tableView dequeueReusableCellWithIdentifier:@"BottomCell"];
 
-        [ cell.topImage setImageWithURL:[NSURL URLWithString:itemModel.imageURLs[0]]];
+        PFObject* dateImage = itemModel.images[0];
+        [dateImage fetchIfNeeded];
+        [cell.topImage setImage:[TWUtility getUIImageWithPFObject:dateImage]];
         cell.topImage.contentMode = UIViewContentModeScaleAspectFit;
         
         cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
@@ -357,7 +297,7 @@ NSMutableDictionary* commentsFrameDict;
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
     
-    [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
+    [headerCell.userProfileImage setImage:itemModel.userProfileImage];
     
     headerCell.userProfileImage.layer.cornerRadius = 24.0;
     headerCell.userProfileImage.clipsToBounds = YES;
@@ -398,15 +338,19 @@ NSMutableDictionary* commentsFrameDict;
         totalNow = aData.total;
     }
     
+    /*
     NSLog(@"-----");
     NSLog(@"y: %f",scrollView.contentOffset.y);
     NSLog(@"total: %f",totalNow);
     NSLog(@"diff: %f",(totalNow - (int)scrollView.contentOffset.y));
     NSLog(@"-----");
-          
-    if( ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
-       && ((totalNow - (int)scrollView.contentOffset.y) >= 0)
-       && firstVisibleIndexPath.row % 2 == 1){//touching other cell, moving other cell
+    */
+     
+    if ( // touching other cell, moving other cell
+            ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
+         && ((totalNow - (int)scrollView.contentOffset.y) >= 0)
+         && (firstVisibleIndexPath.row % 2 == 1)
+       ) {
         int pos = totalNow - (int)scrollView.contentOffset.y - TOP_CELL_HEIGHT;
         headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
         [self updateTopCell:scrollView];
@@ -417,8 +361,5 @@ NSMutableDictionary* commentsFrameDict;
         
     }
 }
-
-
-
 
 @end

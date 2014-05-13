@@ -1,10 +1,15 @@
 PODS:
+  - MDMultilineTextView (0.0.5):
+    - MDMultilineTextView/Core
+  - MDMultilineTextView/Core (0.0.5)
   - YLMoment (0.5.0)
 
 DEPENDENCIES:
+  - MDMultilineTextView (~> 0.0)
   - YLMoment (~> 0.5)
 
 SPEC CHECKSUMS:
+  MDMultilineTextView: 974ab30e47baffcc26e03abcba3566b36993845d
   YLMoment: 8afae58eabe5c363616445cd69b29c79680abfa9
 
 COCOAPODS: 0.32.1

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Thomas Wrenn. All rights reserved.
 //
 
-#import <Parse/Parse.h>
 #import "TWAppDelegate.h"
 
 @implementation TWAppDelegate
@@ -16,6 +15,13 @@
     // Override point for customization after application launch.
     [Parse setApplicationId:@"OoHIkXP4veqn7ch2kLv5UojFwQzyFC37QJDBaoir"
                   clientKey:@"ZdZ8sonuTHkAYzKWwQSu2EFBH1ThPNgl1PklDd5C"];
+    [PFUser logInWithUsername:@"thomaswrenn" password:@"Turtle1458"];
+    PFUser* loggedInUser = [PFUser currentUser];
+    if (loggedInUser) {
+        NSLog(@"login to thomaswrenn successful");
+    } else {
+        NSLog(@"login to thomaswrenn failed");
+    }
     return YES;
 }
 							

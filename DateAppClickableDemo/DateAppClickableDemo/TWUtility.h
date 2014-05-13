@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Thomas Wrenn. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "TWFeedItemModel.h"
 
 @interface TWUtility : NSObject
 
@@ -17,5 +17,8 @@
 + (NSString *)commentsBlockFromNSArray:(NSMutableArray *)nsarray withAmount:(NSInteger) size;
 
 + (NSString *)locationsFromNSArray:(NSMutableArray *)nsarray;
+
++ (void)getDatesFromUsers:(NSMutableArray *)fromUsers withCallback:(void (^)(NSArray *dates, NSError *error))completionBlock;
++ (UIImage *)getUIImageWithPFObject:(PFObject *)image;
 
 @end

@@ -6,7 +6,10 @@
 //  Copyright (c) 2014 Thomas Wrenn. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <YLMoment.h>
+#import "TWFeedItemModel.h"
+#import "TWFeedCell.h"
+
 #define TOP_CELL_HEIGHT 68
 #define BOTTOM_CELL_HEIGHT 335
 #define OLD_CELL_TEXTVIEW_HEIGHT 83
