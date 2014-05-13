@@ -203,49 +203,22 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E57-6Z-Qa5">
-                                        <rect key="frame" x="0.0" y="-308" width="325" height="880"/>
+                                        <rect key="frame" x="0.0" y="-12" width="325" height="880"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="big add.png" translatesAutoresizingMaskIntoConstraints="NO" id="BrI-1k-mOT">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="big add.png" translatesAutoresizingMaskIntoConstraints="NO" id="BrI-1k-mOT">
                                                 <rect key="frame" x="3" y="102" width="320" height="320"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </imageView>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LLC_Sam" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hY6-hb-Bry">
-                                                <rect key="frame" x="19" y="67" width="93" height="21"/>
+                                                <rect key="frame" x="19" y="75" width="93" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qS6-5c-ota">
-                                                <rect key="frame" x="36" y="29" width="46" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Album">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="album:" destination="ZZp-1B-gNo" eventType="touchUpInside" id="eT3-sC-Tyg"/>
-                                                </connections>
-                                            </button>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DateApp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F0j-fg-RPw">
-                                                <rect key="frame" x="128" y="33" width="68" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvf-Ve-Zdp">
-                                                <rect key="frame" x="236" y="29" width="54" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Retake ">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="retakePic:" destination="ZZp-1B-gNo" eventType="touchUpInside" id="5bJ-M5-s0w"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGZ-Ar-1l6">
                                                 <rect key="frame" x="3" y="438" width="127" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -272,16 +245,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="submit:" destination="ZZp-1B-gNo" eventType="touchUpInside" id="3KY-Cn-VMO"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aP-U5-OdE">
-                                                <rect key="frame" x="2" y="102" width="320" height="320"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Add Picture" backgroundImage="big add.png">
-                                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="addPicture:" destination="ZZp-1B-gNo" eventType="touchUpInside" id="m6P-Ou-cxS"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gji-j1-VEl">
@@ -340,6 +303,24 @@
                                                     <action selector="ReturnKeyButton:" destination="ZZp-1B-gNo" eventType="editingDidEndOnExit" id="Dqi-Hy-Qmi"/>
                                                 </connections>
                                             </textField>
+                                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znk-WL-cHv">
+                                                <rect key="frame" x="-3" y="27" width="325" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <items>
+                                                    <navigationItem id="utc-F7-N3M">
+                                                        <barButtonItem key="leftBarButtonItem" image="Albums" id="Fib-8I-NYm">
+                                                            <connections>
+                                                                <action selector="photoalbum:" destination="ZZp-1B-gNo" id="ctl-Kg-xas"/>
+                                                            </connections>
+                                                        </barButtonItem>
+                                                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="tro-FM-Jur">
+                                                            <connections>
+                                                                <action selector="camera:" destination="ZZp-1B-gNo" id="Ahl-Kf-mHu"/>
+                                                            </connections>
+                                                        </barButtonItem>
+                                                    </navigationItem>
+                                                </items>
+                                            </navigationBar>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
@@ -365,10 +346,11 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Create" image="create" id="Pgn-Fh-DPA"/>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
-                        <outlet property="addPic" destination="9aP-U5-OdE" id="2xN-sA-Bvx"/>
                         <outlet property="chooseLocation" destination="Uzx-Ql-Six" id="FLX-5z-MbT"/>
                         <outlet property="imageView" destination="BrI-1k-mOT" id="7fT-2p-eMW"/>
                         <outlet property="locations" destination="yrZ-ue-P5m" id="Z0J-R4-fps"/>
@@ -523,6 +505,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Albums" width="27" height="24"/>
         <image name="Facebook" width="25" height="25"/>
         <image name="Instagram" width="25" height="25"/>
         <image name="Pinterest" width="25" height="25"/>
