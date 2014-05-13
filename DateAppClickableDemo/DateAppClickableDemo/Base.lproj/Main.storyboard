@@ -497,7 +497,7 @@
                                 <rect key="frame" x="0.0" y="128" width="320" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="Listing"/>
+                                    <segment title="Posts"/>
                                     <segment title="Map"/>
                                 </segments>
                                 <connections>
@@ -511,7 +511,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.086876224210000005" green="0.73171851720000003" blue="0.84175701530000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="Vgk-ev-nRu"/>
                     <nil key="simulatedTopBarMetrics"/>
