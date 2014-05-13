@@ -17,10 +17,8 @@
 #import "UIImageView+WebCache.h"
 #import "TWCellFrameData.h"
 
-NSString *kFeedCellID = @"feedCellID";  // UICollectionViewCell storyboard id
 BOOL isFirstCell = YES;
 NSMutableArray* commentsToSendToNextView;
-float totalCellYPast = 0;
 NSInteger numOfCommentsToShow = 5;
 
 NSMutableDictionary* commentsFrameDict;
