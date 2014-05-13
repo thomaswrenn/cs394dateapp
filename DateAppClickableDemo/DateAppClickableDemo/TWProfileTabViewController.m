@@ -71,9 +71,14 @@ CGRect mapViewFrame;
     [tableview reloadData];
 }
 
+-(void) viewDidLayoutSubviews{
+    [tableview reloadData];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     isFirstCell = YES;
     listingArray = [[NSMutableArray alloc] init];
@@ -136,7 +141,7 @@ CGRect mapViewFrame;
         
         // TODO Assign each thing to the proper thing
         NSString *name = @"Evan Gallagher";
-        name = [NSString stringWithFormat:@"Evan Gallagher %li",(i+1)];
+//        name = [NSString stringWithFormat:@"Evan Gallagher %li",(i+1)];
         [itemModel.username setString: name];
         [itemModel.userProfileImageURL setString:profileImageURL];
         itemModel.timePosted = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] timeIntervalSince1970]];
@@ -353,7 +358,7 @@ CGRect mapViewFrame;
     if( isFirstCell ){
         isFirstCell = NO;
         
-        headerCell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
+//        headerCell = (TWFeedTopCell *)[tableView dequeueReusableCellWithIdentifier:@"TopCell"];
         
 //        [headerCell.userProfileImage setImageWithURL:[NSURL URLWithString:itemModel.userProfileImageURL]];
         [headerCell.userProfileImage setImage:itemModel.userProfileImage];
@@ -453,114 +458,128 @@ CGRect mapViewFrame;
     headerCell.index = index;
 }
 
+//-(void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+//    if( scrollView.contentOffset.y < NAV_BAR_HEIGHT &&  scrollView.contentOffset.y > 0 ){
+//        CGRect newFrame = tableview.frame;
+//        newFrame.origin.y = tableviewFrame.origin.y - scrollView.contentOffset.y;
+//        //        newFrame.size.height = tableviewFrame.size.height + scrollView.contentOffset.y;
+//        tableview.frame = newFrame;
+//        
+//        int pos = NAV_BAR_HEIGHT - scrollView.contentOffset.y;
+//        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
+//        
+//        [[tableview superview] bringSubviewToFront:headerCell];
+//    }
+//}
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    NSLog(@"tableview y: %f",tableview.frame.origin.y);
-
-    NSLog(@"scroll y: %f",scrollView.contentOffset.y);
-
-    if( scrollView.contentOffset.y <= 0 ){
-        [profileImage setHidden:NO];
-        [profileLocation setHidden:NO];
-        [profileName setHidden:NO];
-        [segmentedControl setHidden:NO];
-        
-        
-        CGRect newFrame = segmentedControl.frame;
-        newFrame.origin.y = segmentedControlFrame.origin.y;
-        segmentedControl.frame = newFrame;
-        
-        newFrame = profileLocation.frame;
-        newFrame.origin.y = profileLocationFrame.origin.y;
-        profileLocation.frame = newFrame;
-        
-        newFrame = profileImage.frame;
-        newFrame.origin.y = profileImageFrame.origin.y;
-        profileImage.frame = newFrame;
-        
-        newFrame = profileName.frame;
-        newFrame.origin.y = profileNameFrame.origin.y;
-        profileName.frame = newFrame;
-        
-        
-        newFrame = tableview.frame;
-        newFrame.origin.y = tableviewFrame.origin.y - scrollView.contentOffset.y;
-        newFrame.size.height = tableviewFrame.size.height + scrollView.contentOffset.y;
-        tableview.frame = newFrame;
-        
-        int pos = NAV_BAR_HEIGHT - scrollView.contentOffset.y;
-        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
-        return;
-    }
-    else if( scrollView.contentOffset.y < NAV_BAR_HEIGHT &&  scrollView.contentOffset.y > 0 ){
-        [profileImage setHidden:NO];
-        [profileLocation setHidden:NO];
-        [profileName setHidden:NO];
-        [segmentedControl setHidden:NO];
-        
-        
-        CGRect newFrame = segmentedControl.frame;
-        newFrame.origin.y = segmentedControlFrame.origin.y - scrollView.contentOffset.y;
-        segmentedControl.frame = newFrame;
-        
-        newFrame = profileLocation.frame;
-        newFrame.origin.y = profileLocationFrame.origin.y - scrollView.contentOffset.y;
-        profileLocation.frame = newFrame;
-        
-        newFrame = profileImage.frame;
-        newFrame.origin.y = profileImageFrame.origin.y - scrollView.contentOffset.y;
-        profileImage.frame = newFrame;
-        
-        newFrame = profileName.frame;
-        newFrame.origin.y = profileNameFrame.origin.y - scrollView.contentOffset.y;
-        profileName.frame = newFrame;
-        
-        
-        newFrame = tableview.frame;
-        newFrame.origin.y = tableviewFrame.origin.y - scrollView.contentOffset.y;
-        newFrame.size.height = tableviewFrame.size.height + scrollView.contentOffset.y;
-        tableview.frame = newFrame;
-        
-        int pos = NAV_BAR_HEIGHT - scrollView.contentOffset.y;
-        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
-        return;
-    }
-    else{
-        
-        [profileImage setHidden:YES];
-        [profileLocation setHidden:YES];
-        [profileName setHidden:YES];
-        [segmentedControl setHidden:YES];
-        
-        CGRect newFrame = segmentedControl.frame;
-        newFrame.origin.y = - segmentedControlFrame.origin.y;
-        segmentedControl.frame = newFrame;
-        
-        newFrame = profileLocation.frame;
-        newFrame.origin.y = - profileLocationFrame.origin.y;
-        profileLocation.frame = newFrame;
-        
-        newFrame = profileImage.frame;
-        newFrame.origin.y = - profileImageFrame.origin.y;
-        profileImage.frame = newFrame;
-        
-        newFrame = profileName.frame;
-        newFrame.origin.y = - profileNameFrame.origin.y;
-        profileName.frame = newFrame;
-        
-        newFrame = tableview.frame;
-        newFrame.origin.y = 0;
-        newFrame.size.height = tableviewFrame.size.height + NAV_BAR_HEIGHT;
-        tableview.frame = newFrame;
-        
-        int pos = 0;
-        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
-    }
-    
-    
-//    return ;
+//    NSLog(@"tableview y: %f",tableview.frame.origin.y);
+//
+//    NSLog(@"scroll y: %f",scrollView.contentOffset.y);
+//
+//    if( scrollView.contentOffset.y <= 0 ){
+//        NSLog(@"asdad1");
+//        [profileImage setHidden:NO];
+//        [profileLocation setHidden:NO];
+//        [profileName setHidden:NO];
+//        [segmentedControl setHidden:NO];
+//        
+//        
+//        CGRect newFrame = segmentedControl.frame;
+//        newFrame.origin.y = segmentedControlFrame.origin.y;
+//        segmentedControl.frame = newFrame;
+//        
+//        newFrame = profileLocation.frame;
+//        newFrame.origin.y = profileLocationFrame.origin.y;
+//        profileLocation.frame = newFrame;
+//        
+//        newFrame = profileImage.frame;
+//        newFrame.origin.y = profileImageFrame.origin.y;
+//        profileImage.frame = newFrame;
+//        
+//        newFrame = profileName.frame;
+//        newFrame.origin.y = profileNameFrame.origin.y;
+//        profileName.frame = newFrame;
+//        
+//        
+//        newFrame = tableview.frame;
+//        newFrame.origin.y = tableviewFrame.origin.y - scrollView.contentOffset.y;
+//        newFrame.size.height = tableviewFrame.size.height + scrollView.contentOffset.y;
+//        tableview.frame = newFrame;
+//        
+//        int pos = NAV_BAR_HEIGHT - scrollView.contentOffset.y;
+//        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
+//        return;
+//    }
+//    else if( scrollView.contentOffset.y < NAV_BAR_HEIGHT &&  scrollView.contentOffset.y > 0 ){
+//        NSLog(@"asdad2");
+//        [profileImage setHidden:NO];
+//        [profileLocation setHidden:NO];
+//        [profileName setHidden:NO];
+//        [segmentedControl setHidden:NO];
+//        
+//        
+////        CGRect newFrame = segmentedControl.frame;
+////        newFrame.origin.y = segmentedControlFrame.origin.y - scrollView.contentOffset.y;
+////        segmentedControl.frame = newFrame;
+////        
+////        newFrame = profileLocation.frame;
+////        newFrame.origin.y = profileLocationFrame.origin.y - scrollView.contentOffset.y;
+////        profileLocation.frame = newFrame;
+////        
+////        newFrame = profileImage.frame;
+////        newFrame.origin.y = profileImageFrame.origin.y - scrollView.contentOffset.y;
+////        profileImage.frame = newFrame;
+////        
+////        newFrame = profileName.frame;
+////        newFrame.origin.y = profileNameFrame.origin.y - scrollView.contentOffset.y;
+////        profileName.frame = newFrame;
+////        
+//        
+//        CGRect newFrame = tableview.frame;
+//        newFrame.origin.y = tableviewFrame.origin.y - scrollView.contentOffset.y;
+//        newFrame.size.height = tableviewFrame.size.height + scrollView.contentOffset.y;
+//        tableview.frame = newFrame;
+////
+//        [self.view bringSubviewToFront:tableview];
+//        int pos = NAV_BAR_HEIGHT - scrollView.contentOffset.y;
+//        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
+//        return;
+//    }
+//    else{
+//        NSLog(@"asdad3");
+//        [profileImage setHidden:YES];
+//        [profileLocation setHidden:YES];
+//        [profileName setHidden:YES];
+//        [segmentedControl setHidden:YES];
+//        
+//        CGRect newFrame = segmentedControl.frame;
+//        newFrame.origin.y = - segmentedControlFrame.origin.y;
+//        segmentedControl.frame = newFrame;
+//        
+//        newFrame = profileLocation.frame;
+//        newFrame.origin.y = - profileLocationFrame.origin.y;
+//        profileLocation.frame = newFrame;
+//        
+//        newFrame = profileImage.frame;
+//        newFrame.origin.y = - profileImageFrame.origin.y;
+//        profileImage.frame = newFrame;
+//        
+//        newFrame = profileName.frame;
+//        newFrame.origin.y = - profileNameFrame.origin.y;
+//        profileName.frame = newFrame;
+//        
+//        newFrame = tableview.frame;
+//        newFrame.origin.y = 0;
+//        newFrame.size.height = tableviewFrame.size.height + NAV_BAR_HEIGHT;
+//        tableview.frame = newFrame;
+//        
+//        int pos = 0;
+//        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
+//    }
+//    
     
     
     if( listingArray.count < 1 ){
@@ -591,27 +610,51 @@ CGRect mapViewFrame;
         totalNow = aData.total;
     }
     
-    NSLog(@"----");
-    NSLog(@"scroll y: %f", scrollView.contentOffset.y);
-    NSLog(@"total y: %f", totalNow);
-    NSLog(@"diff y: %f", totalNow - (int)scrollView.contentOffset.y);
-    NSLog(@"----");
+//    NSLog(@"----");
+//    NSLog(@"scroll y: %f", scrollView.contentOffset.y);
+//    NSLog(@"total y: %f", totalNow);
+//    NSLog(@"diff y: %f", totalNow - (int)scrollView.contentOffset.y);
+//    NSLog(@"----");
+//    
+    
+//    CGRect newFrame = tableview.frame;
+//    newFrame.origin.y = 0;
+//    newFrame.size.height = tableviewFrame.size.height + NAV_BAR_HEIGHT;
+//    tableview.frame = newFrame;
+//    
     
     if( ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
        && ((totalNow - (int)scrollView.contentOffset.y) >= 0)
        && firstVisibleIndexPath.row % 2 == 1){//touching other cell, moving other cell
-        CGFloat svHeight = 0;
-        int pos = totalNow - (int)scrollView.contentOffset.y - TOP_CELL_HEIGHT + svHeight;
-        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
+//        CGFloat svHeight = NAV_BAR_HEIGHT;
+//        int pos = totalNow - (int)scrollView.contentOffset.y - TOP_CELL_HEIGHT + svHeight;
+//        headerCell.frame = CGRectMake(0,pos,headerCell.frame.size.width,headerCell.frame.size.height);
         
+//        CGRect newFrame = tableview.frame;
+//        newFrame.origin.y = 0;
+//        tableview.frame = newFrame;
+//        
         [self updateTopCell:scrollView];
     }
     else{
-        CGFloat svHeight = 0;
+        CGFloat svHeight = NAV_BAR_HEIGHT;
         headerCell.frame = CGRectMake(0,svHeight,headerCell.frame.size.width,headerCell.frame.size.height);
         [self updateTopCell:scrollView];
         
     }
+    
+//     newFrame = tableview.frame;
+//    newFrame.origin.y = 0;
+////    newFrame.size.height = tableviewFrame.size.height + NAV_BAR_HEIGHT;
+//    tableview.frame = newFrame;
+//    
+//    NSLog(@"beep111!!!!!!!!!!!!!!!!!!");
+//
+//    NSLog(@"tableview y: %f",tableview.frame.origin.y);
+//    
+//    NSLog(@"beep111!!!!!!!!!!!!!!!!!!");
+//    
+//    [self.view bringSubviewToFront:tableview];
 }
 
 @end
