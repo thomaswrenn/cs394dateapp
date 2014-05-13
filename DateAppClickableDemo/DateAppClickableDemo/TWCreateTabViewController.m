@@ -389,7 +389,7 @@
                                                    delegate:self
                                           cancelButtonTitle:@"Okay"
                                           otherButtonTitles:nil];
-    [alert show];
+//    [alert show];
 }
 
 - (IBAction)locationToggle:(UISegmentedControl *)sender {
