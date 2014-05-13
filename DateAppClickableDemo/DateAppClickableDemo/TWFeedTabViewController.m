@@ -158,23 +158,22 @@ NSMutableDictionary* commentsFrameDict;
     
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: (indexPath.row/2)];
     
-    AMAttributedHighlightLabel* commentsLabel = cell.comments;
-    commentsLabel.delegate = self;
-    commentsLabel.userInteractionEnabled = YES;
-    commentsLabel.numberOfLines = 0;
-    commentsLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    cell.comments.delegate = self;
+    cell.comments.userInteractionEnabled = YES;
+    cell.comments.numberOfLines = 0;
+    cell.comments.lineBreakMode = NSLineBreakByCharWrapping;
     
-    [commentsLabel setString:[TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow]];
+    [cell.comments setString:[TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow]];
     
-    commentsLabel.textColor = [UIColor lightGrayColor];
-    commentsLabel.mentionTextColor = [UIColor darkGrayColor];
-    commentsLabel.hashtagTextColor = [UIColor darkGrayColor];
-    commentsLabel.linkTextColor = [UIColor colorWithRed:129.0/255.0 green:171.0/255.0 blue:193.0/255.0 alpha:1.0];
-    commentsLabel.selectedMentionTextColor = [UIColor blackColor];
-    commentsLabel.selectedHashtagTextColor = [UIColor blackColor];
-    commentsLabel.selectedLinkTextColor = UIColorFromRGB(0x4099FF);
+    cell.comments.textColor = [UIColor lightGrayColor];
+    cell.comments.mentionTextColor = [UIColor darkGrayColor];
+    cell.comments.hashtagTextColor = [UIColor darkGrayColor];
+    cell.comments.linkTextColor = [UIColor colorWithRed:129.0/255.0 green:171.0/255.0 blue:193.0/255.0 alpha:1.0];
+    cell.comments.selectedMentionTextColor = [UIColor blackColor];
+    cell.comments.selectedHashtagTextColor = [UIColor blackColor];
+    cell.comments.selectedLinkTextColor = UIColorFromRGB(0x4099FF);
     
-    float newHeight = [cell.comments sizeThatFits:CGSizeMake(commentsLabel.frame.size.width, MAXFLOAT)].height;
+    float newHeight = [cell.comments sizeThatFits:CGSizeMake(cell.comments.frame.size.width, MAXFLOAT)].height;
         
     CGFloat bottomHeight = BOTTOM_CELL_HEIGHT - OLD_CELL_TEXTVIEW_HEIGHT + newHeight;
     [self addDataToCellDict: indexPath.row withHeight:bottomHeight];
@@ -234,7 +233,7 @@ NSMutableDictionary* commentsFrameDict;
         TWFeedCell *cell = (TWFeedCell *)[tableView dequeueReusableCellWithIdentifier:@"BottomCell"];
 
         PFObject* dateImage = itemModel.images[0];
-        [dateImage refresh];
+        [dateImage fetchIfNeeded];
         [cell.topImage setImage:[TWUtility getUIImageWithPFObject:dateImage]];
         cell.topImage.contentMode = UIViewContentModeScaleAspectFit;
         
@@ -284,7 +283,6 @@ NSMutableDictionary* commentsFrameDict;
     
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
-    
     [headerCell.userProfileImage setImage:itemModel.userProfileImage];
     
     headerCell.userProfileImage.layer.cornerRadius = 24.0;
@@ -326,12 +324,14 @@ NSMutableDictionary* commentsFrameDict;
         totalNow = aData.total;
     }
     
+    /*
     NSLog(@"-----");
     NSLog(@"y: %f",scrollView.contentOffset.y);
     NSLog(@"total: %f",totalNow);
     NSLog(@"diff: %f",(totalNow - (int)scrollView.contentOffset.y));
     NSLog(@"-----");
-          
+    */
+     
     if( ((totalNow - (int)scrollView.contentOffset.y) <=  TOP_CELL_HEIGHT)
        && ((totalNow - (int)scrollView.contentOffset.y) >= 0)
        && firstVisibleIndexPath.row % 2 == 1){//touching other cell, moving other cell
