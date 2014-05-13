@@ -134,11 +134,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="315"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2yr-XN-Gpa" customClass="AMAttributedHighlightLabel">
-                                            <rect key="frame" x="103" y="306" width="0.0" height="0.0"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="Comments" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHJ-Dh-xfx">
+                                            <rect key="frame" x="18" y="224" width="285" height="83"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        </view>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="83" id="B6w-82-Bp1"/>
+                                                <constraint firstAttribute="width" constant="285" id="Vv5-qM-F4e"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRK-Qa-vUC">
                                             <rect key="frame" x="249" y="195" width="54" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -158,7 +164,8 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="comments" destination="2yr-XN-Gpa" id="gMY-bo-bFQ"/>
+                                    <outlet property="commentsBlock" destination="zHJ-Dh-xfx" id="Br6-iE-LZE"/>
+                                    <outlet property="heightConstraint" destination="B6w-82-Bp1" id="zuC-tH-PZu"/>
                                     <outlet property="likeCount" destination="NRK-Qa-vUC" id="JFR-9Y-ClN"/>
                                     <outlet property="locationsBlock" destination="QF1-6r-1CV" id="eNv-HL-fn7"/>
                                     <outlet property="topImage" destination="O3q-NC-iVf" id="lK2-Eg-mkL"/>

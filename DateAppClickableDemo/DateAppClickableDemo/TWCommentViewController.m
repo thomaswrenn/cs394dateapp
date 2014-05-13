@@ -9,11 +9,10 @@
 #import "TWCommentViewController.h"
 #import "TWCommentTableViewCell.h"
 #import "DAKeyboardControl.h"
-#import <AMAttributedHighlightLabel/AMAttributedHighlightLabel.h>
 
 @interface TWCommentViewController ()
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (strong, nonatomic) IBOutlet AMAttributedHighlightLabel *commentField;
+@property (strong, nonatomic) IBOutlet UITextField *commentField;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 

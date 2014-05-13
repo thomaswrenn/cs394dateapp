@@ -8,13 +8,13 @@
 
 @interface TWFeedItemModel : NSObject
 
+@property (strong, nonatomic) NSMutableArray *images;
 @property (strong, nonatomic) NSMutableString *username;
-@property (strong, nonatomic) NSDate          *timePosted;
-@property (strong, nonatomic) UIImage         *userProfileImage;
-@property (strong, nonatomic) NSMutableArray  *images;
-@property (strong, nonatomic) NSMutableArray  *locations;
-@property (strong, nonatomic) NSMutableArray  *likes;
-@property (strong, nonatomic) NSMutableArray  *comments;
+@property (strong, nonatomic) UIImage *userProfileImage;
+@property (strong, nonatomic) NSDate *timePosted;
+@property (strong, nonatomic) NSMutableArray *comments;
+@property (strong, nonatomic) NSMutableArray *locations;
+@property (strong, nonatomic) NSMutableArray *likes;
 
 - (id)initWithPFObject:(PFObject *)datePFObject;
 

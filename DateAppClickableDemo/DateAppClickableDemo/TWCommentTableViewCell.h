@@ -10,7 +10,7 @@
 
 @interface TWCommentTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet AMAttributedHighlightLabel *commentLabel;
+@property (strong, nonatomic) IBOutlet UITextView *commentLabel;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 

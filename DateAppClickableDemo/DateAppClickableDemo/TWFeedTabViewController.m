@@ -10,6 +10,12 @@
 #define kfeedItemsJSONURL [NSURL URLWithString: @"https://dl.dropboxusercontent.com/u/641088/DateApp/feedRESTcall.json"] //2
 
 #import "TWFeedTabViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "TWFeedTopCell.h"
+#import "TWCommentViewController.h"
+#import "TWTapGestureRecognizer.h"
+#import "UIImageView+WebCache.h"
+#import "TWCellFrameData.h"
 
 NSString *kFeedCellID = @"feedCellID";  // UICollectionViewCell storyboard id
 BOOL isFirstCell = YES;
@@ -75,10 +81,10 @@ NSMutableDictionary* commentsFrameDict;
                 TWFeedItemModel *feedItem = [[TWFeedItemModel alloc] initWithPFObject:date];
                 [self.feedDates addObject: feedItem];
             }
-            [self.tableView reloadData];
         } else {
             NSLog(@"Date Fetch Unsuccessful");
         }
+        [self.tableView reloadData];
     }];
 }
 
@@ -158,22 +164,9 @@ NSMutableDictionary* commentsFrameDict;
     
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: (indexPath.row/2)];
     
-    cell.comments.delegate = self;
-    cell.comments.userInteractionEnabled = YES;
-    cell.comments.numberOfLines = 0;
-    cell.comments.lineBreakMode = NSLineBreakByCharWrapping;
+    [cell.commentsBlock setText:[TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow]];
     
-    [cell.comments setString:[TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow]];
-    
-    cell.comments.textColor = [UIColor lightGrayColor];
-    cell.comments.mentionTextColor = [UIColor darkGrayColor];
-    cell.comments.hashtagTextColor = [UIColor darkGrayColor];
-    cell.comments.linkTextColor = [UIColor colorWithRed:129.0/255.0 green:171.0/255.0 blue:193.0/255.0 alpha:1.0];
-    cell.comments.selectedMentionTextColor = [UIColor blackColor];
-    cell.comments.selectedHashtagTextColor = [UIColor blackColor];
-    cell.comments.selectedLinkTextColor = UIColorFromRGB(0x4099FF);
-    
-    float newHeight = [cell.comments sizeThatFits:CGSizeMake(cell.comments.frame.size.width, MAXFLOAT)].height;
+    float newHeight = [cell.commentsBlock sizeThatFits:CGSizeMake(cell.commentsBlock.frame.size.width, MAXFLOAT)].height;
         
     CGFloat bottomHeight = BOTTOM_CELL_HEIGHT - OLD_CELL_TEXTVIEW_HEIGHT + newHeight;
     [self addDataToCellDict: indexPath.row withHeight:bottomHeight];
@@ -239,7 +232,7 @@ NSMutableDictionary* commentsFrameDict;
         
         cell.likeCount.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)itemModel.likes.count];
         
-        cell.comments.text = [TWUtility commentsBlockFromNSArray:itemModel.comments withAmount:numOfCommentsToShow];
+        cell.commentsBlock.text = [TWUtility commentsBlockFromNSArray: itemModel.comments withAmount:numOfCommentsToShow];
         
 //        CGFloat fixedWidth = cell.commentsBlock.frame.size.width;
 //        CGSize newSize = [cell.commentsBlock sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
@@ -248,15 +241,15 @@ NSMutableDictionary* commentsFrameDict;
 //
 //        cell.heightConstraint.constant = newFrame.size.height;
       
-        cell.heightConstraint.constant = [cell.comments sizeThatFits:CGSizeMake(cell.comments.frame.size.width, MAXFLOAT)].height;
+        cell.heightConstraint.constant = [cell.commentsBlock sizeThatFits:CGSizeMake(cell.commentsBlock.frame.size.width, MAXFLOAT)].height;
         
         cell.locationsBlock.text = [TWUtility locationsFromNSArray: itemModel.locations];
         
-        [cell.comments setUserInteractionEnabled:YES];
+        [cell.commentsBlock setUserInteractionEnabled:YES];
         TWTapGestureRecognizer *tgr = [[TWTapGestureRecognizer alloc] initWithTarget:self action:@selector(commentSectionPressed:)];
         tgr.commentsArray = itemModel.comments;
         [tgr setNumberOfTapsRequired:1];
-        [cell.comments addGestureRecognizer:tgr];
+        [cell.commentsBlock addGestureRecognizer:tgr];
         
         cell.index = (indexPath.row/2);
         
@@ -283,7 +276,7 @@ NSMutableDictionary* commentsFrameDict;
     
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
-    [headerCell.userProfileImage setImage:itemModel.userProfileImage];
+    [self.headerCell.userProfileImage setImage:itemModel.userProfileImage];
     
     headerCell.userProfileImage.layer.cornerRadius = 24.0;
     headerCell.userProfileImage.clipsToBounds = YES;
