@@ -276,11 +276,12 @@ NSMutableDictionary* commentsFrameDict;
     
     TWFeedItemModel *itemModel = [self.feedDates objectAtIndex: index];
     
-    [self.headerCell.userProfileImage setImage:itemModel.userProfileImage];
+    [headerCell.userProfileImage setImage:itemModel.userProfileImage];
     
     headerCell.userProfileImage.layer.cornerRadius = 24.0;
     headerCell.userProfileImage.clipsToBounds = YES;
-    [headerCell.username setText:itemModel.username];
+    //[headerCell.username setText:itemModel.username];
+    [headerCell.username setText:@"Castille"];
     
     headerCell.timePosted.text = [[YLMoment momentWithDate: itemModel.timePosted] fromNow];
     headerCell.index = index;
